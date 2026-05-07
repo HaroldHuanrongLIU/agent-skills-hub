@@ -153,6 +153,10 @@ export function ArenaPage() {
   const [leaderboard, setLeaderboard] = useState<LeaderRow[]>([]);
   const [voterHash, setVoterHash] = useState<string>("");
   const [totalVotes, setTotalVotes] = useState(0);
+  // Custom Battle: user picks 2 specific skills instead of random
+  const [customMode, setCustomMode] = useState(false);
+  const [customLeft, setCustomLeft] = useState<ArenaSkill | null>(null);
+  const [customRight, setCustomRight] = useState<ArenaSkill | null>(null);
 
   const currentScenario = useMemo(
     () => SCENARIOS.find((s) => s.tag === scenario) || SCENARIOS[0],
@@ -241,10 +245,16 @@ export function ArenaPage() {
   }, [scenario]);
 
   useEffect(() => {
-    void fetchPair();
+    if (!customMode) void fetchPair();
     void fetchLeaderboard();
     void fetchVoteCount();
-  }, [fetchPair, fetchLeaderboard, fetchVoteCount]);
+  }, [fetchPair, fetchLeaderboard, fetchVoteCount, customMode]);
+
+  // Reset custom selections when scenario or mode changes
+  useEffect(() => {
+    setCustomLeft(null);
+    setCustomRight(null);
+  }, [scenario, customMode]);
 
   const submitVote = async (winner: ArenaSkill, loser: ArenaSkill) => {
     if (!supabase || !voterHash || submitting) return;
@@ -267,7 +277,13 @@ export function ArenaPage() {
       if ((voteCount + 1) % 3 === 0) {
         void fetchLeaderboard();
       }
-      void fetchPair();
+      if (customMode) {
+        // After a custom vote, clear selections so user can pick a new pair
+        setCustomLeft(null);
+        setCustomRight(null);
+      } else {
+        void fetchPair();
+      }
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Vote failed";
       setError(msg);
@@ -359,6 +375,32 @@ export function ArenaPage() {
             </div>
           </div>
 
+          {/* Mode toggle: Random vs Custom Battle */}
+          <div className="flex justify-center gap-1 mb-6 p-1 bg-gray-100 dark:bg-gray-900 rounded-full max-w-xs mx-auto">
+            <button
+              onClick={() => setCustomMode(false)}
+              className={
+                "flex-1 px-4 py-1.5 text-sm font-medium rounded-full transition-colors " +
+                (!customMode
+                  ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white")
+              }
+            >
+              🎲 {lang === "zh" ? "随机" : "Random"}
+            </button>
+            <button
+              onClick={() => setCustomMode(true)}
+              className={
+                "flex-1 px-4 py-1.5 text-sm font-medium rounded-full transition-colors " +
+                (customMode
+                  ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white")
+              }
+            >
+              🎯 {lang === "zh" ? "自选" : "Custom"}
+            </button>
+          </div>
+
           {/* PK pair */}
           {error && (
             <div className="mb-4 p-4 rounded-lg bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-400 text-sm">
@@ -366,7 +408,17 @@ export function ArenaPage() {
             </div>
           )}
 
-          {loading ? (
+          {customMode ? (
+            <CustomBattle
+              left={customLeft}
+              right={customRight}
+              onSelectLeft={setCustomLeft}
+              onSelectRight={setCustomRight}
+              onVote={(winner, loser) => submitVote(winner, loser)}
+              submitting={submitting}
+              lang={lang}
+            />
+          ) : loading ? (
             <div className="flex items-center justify-center min-h-[300px]">
               <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-500" />
             </div>
@@ -553,6 +605,258 @@ function ArenaCard({ skill, onVote, disabled, lang }: ArenaCardProps) {
       >
         {lang === "zh" ? "选这个 ✓" : "Pick this ✓"}
       </button>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Custom Battle: search 2 skills + PK them directly
+// ──────────────────────────────────────────────────────────────────
+
+interface CustomBattleProps {
+  left: ArenaSkill | null;
+  right: ArenaSkill | null;
+  onSelectLeft: (s: ArenaSkill | null) => void;
+  onSelectRight: (s: ArenaSkill | null) => void;
+  onVote: (winner: ArenaSkill, loser: ArenaSkill) => void;
+  submitting: boolean;
+  lang: string;
+}
+
+function CustomBattle({
+  left,
+  right,
+  onSelectLeft,
+  onSelectRight,
+  onVote,
+  submitting,
+  lang,
+}: CustomBattleProps) {
+  const ready = left && right && left.id !== right.id;
+  return (
+    <div className="relative">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <CustomSlot
+          skill={left}
+          onSelect={onSelectLeft}
+          excludeId={right?.id}
+          placeholder={lang === "zh" ? "搜索左侧工具…" : "Search left tool…"}
+          onVote={ready ? () => onVote(left, right) : undefined}
+          disabled={submitting}
+          lang={lang}
+        />
+        <CustomSlot
+          skill={right}
+          onSelect={onSelectRight}
+          excludeId={left?.id}
+          placeholder={lang === "zh" ? "搜索右侧工具…" : "Search right tool…"}
+          onVote={ready ? () => onVote(right, left) : undefined}
+          disabled={submitting}
+          lang={lang}
+        />
+      </div>
+
+      {ready && (
+        <div className="hidden md:flex absolute inset-0 items-center justify-center pointer-events-none">
+          <div className="bg-gradient-to-br from-orange-500 to-red-500 text-white font-bold text-xl rounded-full w-14 h-14 flex items-center justify-center shadow-lg ring-4 ring-white dark:ring-gray-950">
+            VS
+          </div>
+        </div>
+      )}
+
+      {!ready && (
+        <p className="text-center mt-6 text-sm text-gray-500 dark:text-gray-400">
+          {lang === "zh"
+            ? "在两侧分别选一个工具，然后投票决出胜者。"
+            : "Pick one tool on each side, then vote for the winner."}
+        </p>
+      )}
+    </div>
+  );
+}
+
+interface CustomSlotProps {
+  skill: ArenaSkill | null;
+  onSelect: (s: ArenaSkill | null) => void;
+  excludeId?: number;
+  placeholder: string;
+  onVote?: () => void;
+  disabled: boolean;
+  lang: string;
+}
+
+function CustomSlot({
+  skill,
+  onSelect,
+  excludeId,
+  placeholder,
+  onVote,
+  disabled,
+  lang,
+}: CustomSlotProps) {
+  if (skill) {
+    return (
+      <div className="bg-white dark:bg-gray-900 border-2 border-indigo-400 dark:border-indigo-500 rounded-xl p-5 flex flex-col">
+        <div className="flex items-center gap-3 mb-3">
+          {skill.author_avatar_url && (
+            <img
+              src={skill.author_avatar_url}
+              alt={skill.author_name}
+              className="w-10 h-10 rounded-full"
+              loading="lazy"
+            />
+          )}
+          <div className="min-w-0 flex-1">
+            <Link
+              to={`/skill/${skill.repo_full_name}/`}
+              className="block text-lg font-bold text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 truncate"
+            >
+              {skill.repo_name}
+            </Link>
+            <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
+              {skill.author_name} · ★ {skill.stars.toLocaleString()}
+              {skill.language && ` · ${skill.language}`}
+            </div>
+          </div>
+          <button
+            onClick={() => onSelect(null)}
+            className="text-xs text-gray-400 hover:text-red-500 px-2"
+            title={lang === "zh" ? "更换" : "Change"}
+          >
+            ✕
+          </button>
+        </div>
+        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed flex-1 line-clamp-4 min-h-[80px]">
+          {skill.description ||
+            (lang === "zh" ? "（无描述）" : "(no description)")}
+        </p>
+        <button
+          onClick={onVote}
+          disabled={!onVote || disabled}
+          className="mt-4 w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors"
+        >
+          {lang === "zh" ? "选这个 ✓" : "Pick this ✓"}
+        </button>
+      </div>
+    );
+  }
+  return (
+    <div className="bg-white dark:bg-gray-900 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl p-5 min-h-[260px] flex flex-col">
+      <SkillSearch
+        onSelect={onSelect}
+        excludeId={excludeId}
+        placeholder={placeholder}
+        lang={lang}
+      />
+    </div>
+  );
+}
+
+interface SkillSearchProps {
+  onSelect: (s: ArenaSkill) => void;
+  excludeId?: number;
+  placeholder: string;
+  lang: string;
+}
+
+function SkillSearch({
+  onSelect,
+  excludeId,
+  placeholder,
+  lang,
+}: SkillSearchProps) {
+  const [q, setQ] = useState("");
+  const [results, setResults] = useState<ArenaSkill[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  // Debounce search
+  useEffect(() => {
+    if (q.trim().length < 2 || !supabase) {
+      setResults([]);
+      return;
+    }
+    const handle = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const term = q.trim().replace(/[%_]/g, "");
+        // Search by repo_full_name (e.g. "mem0ai/mem0") or repo_name ("mem0")
+        const { data } = await supabase
+          .from("skills")
+          .select(
+            "id,repo_full_name,repo_name,author_avatar_url,author_name,stars,description,language,tags",
+          )
+          .or(`repo_full_name.ilike.%${term}%,repo_name.ilike.%${term}%`)
+          .gte("stars", 50)
+          .order("stars", { ascending: false })
+          .limit(8);
+        const filtered =
+          excludeId !== undefined
+            ? (data || []).filter((s) => s.id !== excludeId)
+            : data || [];
+        setResults(filtered as ArenaSkill[]);
+      } finally {
+        setLoading(false);
+      }
+    }, 250);
+    return () => clearTimeout(handle);
+  }, [q, excludeId]);
+
+  return (
+    <div className="flex-1 flex flex-col">
+      <input
+        type="text"
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder={placeholder}
+        className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 dark:text-white"
+        autoFocus
+      />
+      <div className="mt-2 flex-1 overflow-y-auto max-h-[200px]">
+        {loading && (
+          <div className="text-xs text-gray-500 py-2">
+            {lang === "zh" ? "搜索中…" : "Searching…"}
+          </div>
+        )}
+        {!loading && q.trim().length >= 2 && results.length === 0 && (
+          <div className="text-xs text-gray-500 py-2">
+            {lang === "zh" ? "没找到匹配的工具" : "No matches"}
+          </div>
+        )}
+        {!loading && q.trim().length < 2 && (
+          <div className="text-xs text-gray-400 py-2 italic">
+            {lang === "zh"
+              ? "至少输入 2 个字符开始搜索"
+              : "Type at least 2 characters to search"}
+          </div>
+        )}
+        <ul className="space-y-1">
+          {results.map((s) => (
+            <li key={s.id}>
+              <button
+                onClick={() => onSelect(s)}
+                className="w-full text-left px-3 py-2 rounded-md hover:bg-indigo-50 dark:hover:bg-indigo-950/40 transition-colors flex items-center gap-2"
+              >
+                {s.author_avatar_url && (
+                  <img
+                    src={s.author_avatar_url}
+                    alt=""
+                    className="w-6 h-6 rounded-full flex-shrink-0"
+                    loading="lazy"
+                  />
+                )}
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                    {s.repo_name}
+                  </div>
+                  <div className="text-xs text-gray-500 truncate">
+                    {s.repo_full_name} · ★ {s.stars.toLocaleString()}
+                  </div>
+                </div>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
