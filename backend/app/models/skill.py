@@ -1,4 +1,5 @@
 from sqlalchemy import Boolean, Column, DateTime, Float, Index, Integer, String, Text
+from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.sql import func
 
 from app.database import Base
@@ -48,6 +49,10 @@ class Skill(Base):
     category = Column(String(100), default="uncategorized", index=True)
     language = Column(String(50), default="")
     topics = Column(Text, default="[]")
+    # Normalized taxonomy tags (~64 controlled values). Computed at sync time
+    # from topics + description + repo_name + language + category. Used by
+    # scenario matcher with high weight (+10) to improve match precision.
+    tags = Column(ARRAY(Text), nullable=False, server_default="{}", default=list)
     license = Column(String(100), default="")
 
     # Computed score (overall)

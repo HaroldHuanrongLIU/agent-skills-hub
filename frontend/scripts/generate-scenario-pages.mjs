@@ -37,6 +37,11 @@ function matchSkills(scenario, allSkills) {
   }
   const excludeKw = (m.exclude_keywords || []).map((k) => k.toLowerCase());
   const topicMatches = (m.topic_matches || []).map((k) => k.toLowerCase());
+  // Curated normalized tags from skills.tags TEXT[] column. Higher precision
+  // than topics because they're computed from a controlled vocabulary.
+  // Weight: +10 each (heavier than +5 topic, +8 primary keyword) to reward
+  // strong taxonomy signal over noisy substring matches.
+  const tagMatches = (m.tag_matches || []).map((k) => k.toLowerCase());
   // New hard filters
   const licenseFilter = (m.license_filter || []).map((k) => k.toUpperCase());
   const languageFilter = (m.language_filter || []); // case-sensitive (matches GitHub's reported language)
@@ -79,6 +84,9 @@ function matchSkills(scenario, allSkills) {
     const name = (skill.repo_name || "").toLowerCase();
     const topicsArr = parseJsonArray(skill.topics).map((t) => t.toLowerCase());
     const topicSet = new Set(topicsArr);
+    // Normalized tags column (TEXT[]) — Supabase REST returns native arrays
+    const tagsArr = Array.isArray(skill.tags) ? skill.tags.map((t) => (t || "").toLowerCase()) : [];
+    const tagSet = new Set(tagsArr);
     const allText = `${desc} ${name} ${topicsArr.join(" ")}`;
 
     // Exclude keywords — hard negative
@@ -104,6 +112,11 @@ function matchSkills(scenario, allSkills) {
     // Topic exact match (+5 each, GitHub topics are author-curated)
     for (const tm of topicMatches) {
       if (topicSet.has(tm)) matchScore += 5;
+    }
+
+    // Tag exact match (+10 each, our normalized taxonomy — strongest signal)
+    for (const tag of tagMatches) {
+      if (tagSet.has(tag)) matchScore += 10;
     }
 
     if (matchScore > 0) {

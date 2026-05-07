@@ -148,7 +148,7 @@ export async function fetchAllSkills() {
   const fields = [
     "id", "repo_full_name", "repo_name", "author_name", "author_avatar_url",
     "stars", "forks", "description", "category", "language", "score", "license",
-    "readme_content", "last_commit_at", "created_at", "topics",
+    "readme_content", "last_commit_at", "created_at", "topics", "tags",
     "quality_score", "platforms", "star_momentum", "estimated_tokens",
     "open_issues", "total_commits",
   ].join(",");

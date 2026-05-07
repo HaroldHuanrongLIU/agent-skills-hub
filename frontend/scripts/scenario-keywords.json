@@ -20,7 +20,11 @@
         "headless"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "web-scraping",
+        "browser"
+      ]
     },
     "related": [
       "browser-automation",
@@ -46,7 +50,10 @@
         "review"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "code-review"
+      ]
     },
     "related": [
       "test-generation",
@@ -95,7 +102,11 @@
         "redis"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "mcp",
+        "database"
+      ]
     },
     "related": [
       "mcp-api",
@@ -141,7 +152,11 @@
         "web-automation"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "mcp",
+        "browser"
+      ]
     },
     "related": [
       "web-scraping",
@@ -185,7 +200,10 @@
         "file-manager"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "mcp"
+      ]
     },
     "related": [
       "mcp-database",
@@ -230,7 +248,10 @@
         "swagger"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "mcp"
+      ]
     },
     "related": [
       "mcp-database",
@@ -275,7 +296,11 @@
         "context"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "mcp",
+        "agent-memory"
+      ]
     },
     "related": [
       "semantic-search",
@@ -302,7 +327,10 @@
         "vitest"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "testing"
+      ]
     },
     "related": [
       "code-review",
@@ -326,7 +354,10 @@
         "codegen"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "code-completion"
+      ]
     },
     "related": [
       "code-review",
@@ -354,7 +385,10 @@
         "dast"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "agent-security"
+      ]
     },
     "related": [
       "secret-detection",
@@ -378,7 +412,10 @@
         "trufflehog"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "agent-security"
+      ]
     },
     "related": [
       "security-audit",
@@ -425,7 +462,10 @@
         "l10n"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "translation"
+      ]
     },
     "related": [
       "content-writing",
@@ -472,7 +512,10 @@
         "parser"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "document"
+      ]
     },
     "related": [
       "content-writing",
@@ -497,7 +540,10 @@
         "task"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "workflow"
+      ]
     },
     "related": [
       "ci-cd",
@@ -523,7 +569,10 @@
         "release"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "ci-cd"
+      ]
     },
     "related": [
       "workflow-automation",
@@ -572,7 +621,11 @@
         "search engine"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "semantic-search",
+        "embedding"
+      ]
     },
     "related": [
       "vector-database",
@@ -597,7 +650,10 @@
         "vector db"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "vector-db"
+      ]
     },
     "related": [
       "semantic-search",
@@ -691,6 +747,9 @@
         "browserbase/skills",
         "iBigQiang/feedgrab",
         "nashsu/autocli-skill"
+      ],
+      "tag_matches": [
+        "browser"
       ]
     },
     "related": [
@@ -715,7 +774,10 @@
         "ingest"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "data-pipeline"
+      ]
     },
     "related": [
       "web-scraping",
@@ -739,7 +801,10 @@
         "syndication"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "rss"
+      ]
     },
     "related": [
       "web-scraping",
@@ -806,7 +871,10 @@
         "slack mcp"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "slack"
+      ]
     },
     "related": [
       "discord-bot",
@@ -826,7 +894,10 @@
         "discord integration"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "discord"
+      ]
     },
     "related": [
       "slack-integration",
@@ -874,7 +945,10 @@
         "telegram backup"
       ],
       "min_results": 3,
-      "max_results": 30
+      "max_results": 30,
+      "tag_matches": [
+        "telegram"
+      ]
     },
     "related": [
       "discord-bot",
@@ -897,7 +971,10 @@
         "email automation"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "email"
+      ]
     },
     "related": [
       "workflow-automation",
@@ -946,7 +1023,10 @@
         "trace"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "debugging"
+      ]
     },
     "related": [
       "code-review",
@@ -994,7 +1074,10 @@
         "infrastructure"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "container"
+      ]
     },
     "related": [
       "ci-cd",
@@ -1019,7 +1102,10 @@
         "gitlab"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "git-tools"
+      ]
     },
     "related": [
       "code-review",
@@ -1044,7 +1130,10 @@
         "screenshot"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "image"
+      ]
     },
     "related": [
       "content-writing",
@@ -1089,7 +1178,10 @@
         "console"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "cli"
+      ]
     },
     "related": [
       "workflow-automation",
@@ -1114,7 +1206,10 @@
         "session"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "auth"
+      ]
     },
     "related": [
       "security-audit",
@@ -1139,7 +1234,10 @@
         "echarts"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "data-visualization"
+      ]
     },
     "related": [
       "data-pipeline",
@@ -1162,7 +1260,11 @@
         "anthropic"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "claude",
+        "skill"
+      ]
     },
     "related": [
       "mcp-database",
@@ -1185,7 +1287,11 @@
         "codex plugin"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "codex",
+        "skill"
+      ]
     },
     "related": [
       "claude-code-skills",
@@ -1222,7 +1328,10 @@
         "agent-framework"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "agent-framework"
+      ]
     },
     "related": [
       "multi-agent",
@@ -1463,7 +1572,10 @@
         "api-documentation"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "testing"
+      ]
     },
     "related": [
       "mcp-api",
@@ -1497,7 +1609,10 @@
         "retrieval"
       ],
       "min_results": 5,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "knowledge-base"
+      ]
     },
     "related": [
       "semantic-search",
@@ -1533,7 +1648,10 @@
         "whisper"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "voice"
+      ]
     },
     "related": [
       "content-writing",
@@ -1606,7 +1724,10 @@
         "database-schema"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "database"
+      ]
     },
     "related": [
       "mcp-database",
@@ -1687,7 +1808,10 @@
         "claude-code-ui"
       ],
       "min_results": 6,
-      "max_results": 12
+      "max_results": 12,
+      "tag_matches": [
+        "skill"
+      ]
     },
     "related": [
       "claude-code-skills",
@@ -1737,7 +1861,10 @@
         "MPL-2.0"
       ],
       "min_results": 10,
-      "max_results": 30
+      "max_results": 30,
+      "tag_matches": [
+        "mcp"
+      ]
     },
     "related": [
       "mcp-database",
@@ -1775,7 +1902,11 @@
         "Python"
       ],
       "min_results": 10,
-      "max_results": 30
+      "max_results": 30,
+      "tag_matches": [
+        "mcp",
+        "python"
+      ]
     },
     "related": [
       "free-mcp-servers",
@@ -1814,7 +1945,11 @@
         "JavaScript"
       ],
       "min_results": 10,
-      "max_results": 30
+      "max_results": 30,
+      "tag_matches": [
+        "mcp",
+        "typescript"
+      ]
     },
     "related": [
       "free-mcp-servers",
@@ -1902,6 +2037,9 @@
         "matsuikentaro1/humanizer_academic",
         "gabelul/slopbuster",
         "MrGeDiao/stop-slop-zh"
+      ],
+      "tag_matches": [
+        "anti-slop"
       ]
     },
     "related": [
@@ -1959,6 +2097,9 @@
         "buildingjoshbetter/TrueMemory",
         "remember-md/remember",
         "kunwar-shah/claudex"
+      ],
+      "tag_matches": [
+        "agent-memory"
       ]
     },
     "related": [
@@ -2001,7 +2142,10 @@
         "security-audit"
       ],
       "min_results": 5,
-      "max_results": 30
+      "max_results": 30,
+      "tag_matches": [
+        "agent-security"
+      ]
     },
     "related": [
       "code-quality",
@@ -2056,6 +2200,9 @@
         "basilisk-labs/agentplane",
         "nizos/probity",
         "Netxeo/skill-file-security"
+      ],
+      "tag_matches": [
+        "agent-governance"
       ]
     },
     "related": [
@@ -2095,7 +2242,11 @@
         "vendor-mcp"
       ],
       "min_results": 5,
-      "max_results": 30
+      "max_results": 30,
+      "tag_matches": [
+        "mcp",
+        "saas"
+      ]
     },
     "related": [
       "mcp-for-github",
@@ -2178,7 +2329,10 @@
         "financial"
       ],
       "min_results": 3,
-      "max_results": 30
+      "max_results": 30,
+      "tag_matches": [
+        "mcp"
+      ]
     },
     "related": [
       "data-pipeline",
@@ -2270,6 +2424,9 @@
         "vercel-labs/agent-browser",
         "browserbase/skills",
         "fluxa-agent-wallet/fluxa-agent-wallet"
+      ],
+      "tag_matches": [
+        "agent-deployment"
       ]
     },
     "related": [
@@ -2310,7 +2467,10 @@
         "speech-agent"
       ],
       "min_results": 3,
-      "max_results": 30
+      "max_results": 30,
+      "tag_matches": [
+        "voice"
+      ]
     },
     "related": [
       "text-to-speech",
@@ -2388,6 +2548,9 @@
         "KhazP/vibe-coding-prompt-template",
         "peterfei/ai-agent-team",
         "anombyte93/prd-taskmaster"
+      ],
+      "tag_matches": [
+        "business-diagnosis"
       ]
     },
     "related": [
@@ -2446,6 +2609,9 @@
         "xpzouying/xiaohongshu-mcp",
         "JoeanAmier/XHS-Downloader",
         "iBigQiang/feedgrab"
+      ],
+      "tag_matches": [
+        "content-syndication"
       ]
     },
     "related": [
@@ -2505,6 +2671,9 @@
         "SamurAIGPT/llm-wiki-agent",
         "trapoom555/claude-paperloom",
         "vanillaflava/llm-wiki-skills"
+      ],
+      "tag_matches": [
+        "personal-knowledge"
       ]
     },
     "related": [
@@ -2552,6 +2721,9 @@
         "NyxTides/ppt-image-first",
         "minhnv0807/fullstack-mkt-skills",
         "seulee26/mckinsey-pptx"
+      ],
+      "tag_matches": [
+        "ppt"
       ]
     },
     "related": [
@@ -2600,6 +2772,10 @@
         "virgiliojr94/book-to-skill",
         "armelhbobdad/bmad-module-skill-forge",
         "Emove/skillify-for-codex"
+      ],
+      "tag_matches": [
+        "skill-creation",
+        "skill"
       ]
     },
     "related": [
@@ -2650,6 +2826,9 @@
         "Chat2AnyLLM/awesome-claude-plugins",
         "waybarrios/opencode-power-pack",
         "iamzhihuix/skills-manage"
+      ],
+      "tag_matches": [
+        "multi-agent"
       ]
     },
     "related": [
@@ -2701,6 +2880,9 @@
         "Mathews-Tom/armory",
         "evanklem/evanflow",
         "anombyte93/prd-taskmaster"
+      ],
+      "tag_matches": [
+        "vibe-coding"
       ]
     },
     "related": [

@@ -600,11 +600,23 @@ async def sync_all_skills(sync_log_id: Optional[int] = None, incremental: bool =
         db = SessionLocal()
         sync_log = db.query(SyncLog).filter(SyncLog.id == sync_log_id_ref).first()
 
+        # Inline import to avoid circular at module load
+        from app.services.tag_extractor import extract_tags  # noqa: WPS433
+
         BATCH_SIZE = 200
         new_count, updated_count = 0, 0
         new_repo_names = []  # Track truly new skill repo names for composability
         for i, repo_data in enumerate(cleaned):
             try:
+                # Compute normalized tags once per row (used for scenario matching)
+                repo_data["tags"] = extract_tags(
+                    topics=repo_data.get("topics"),
+                    description=repo_data.get("description"),
+                    repo_name=repo_data.get("repo_name"),
+                    language=repo_data.get("language"),
+                    category=repo_data.get("category"),
+                )
+
                 existing = (
                     db.query(Skill)
                     .filter(Skill.repo_full_name == repo_data["repo_full_name"])
