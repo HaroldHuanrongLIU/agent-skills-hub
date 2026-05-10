@@ -20,28 +20,75 @@
   <meta name="twitter:description" content="5 tiers · 20 skills · idea → launch in 6 weeks. Real examples." />
   <meta name="twitter:site" content="@GoSailGlobal" />
   <link rel="canonical" href="https://agentskillshub.top/blog/skill-stack-solo-saas-2026/" />
+  <link rel="alternate" hreflang="en" href="https://agentskillshub.top/blog/skill-stack-solo-saas-2026/" />
+  <link rel="alternate" hreflang="zh" href="https://agentskillshub.top/blog/skill-stack-solo-saas-2026/zh/" />
+  <link rel="alternate" hreflang="x-default" href="https://agentskillshub.top/blog/skill-stack-solo-saas-2026/" />
   <link rel="stylesheet" href="/best-pages.css" />
   <script defer data-domain="agentskillshub.top" src="https://plausible.io/js/script.js"></script>
   <style>
-    .article-body { max-width: 720px; margin: 0 auto; padding: 0 16px 80px; }
-    .article-body h2 { font-size: 22px; font-weight: 700; margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--bp-border); color: var(--bp-text); }
-    .article-body p { color: var(--bp-text-secondary); line-height: 1.9; margin: 0 0 16px; font-size: 15px; }
-    .article-body ul { color: var(--bp-text-secondary); line-height: 1.8; margin: 0 0 16px; padding-left: 24px; font-size: 15px; }
-    .article-body code { background: var(--bp-bg-alt); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--bp-link); }
-    .article-body blockquote { border-left: 3px solid var(--bp-link); padding: 12px 16px; margin: 0 0 16px; background: var(--bp-bg-alt); border-radius: 0 8px 8px 0; }
-    .article-body blockquote p { margin: 0; font-style: italic; }
-    .article-body a { color: var(--bp-link); text-decoration: none; }
-    .article-body a:hover { text-decoration: underline; }
-    .article-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin: 12px 0 32px; font-size: 14px; color: var(--bp-text-muted); }
-    .article-tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; background: var(--bp-badge-purple-bg); color: var(--bp-badge-purple-text); }
-    .ref-card { display: block; padding: 12px 16px; margin: 8px 0; background: var(--bp-card-bg); border: 1px solid var(--bp-border); border-radius: 8px; text-decoration: none; transition: border-color 0.2s; }
-    .ref-card:hover { border-color: var(--bp-link); text-decoration: none; }
-    .ref-card-title { font-size: 15px; font-weight: 600; color: var(--bp-text); }
-    .ref-card-desc { font-size: 13px; color: var(--bp-text-muted); margin-top: 4px; }
-    .ref-card-stars { font-size: 12px; color: var(--bp-link); margin-top: 4px; }
-    .flag-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
-    .flag-table th { text-align: left; padding: 8px 12px; background: var(--bp-bg-alt); color: var(--bp-text); font-weight: 600; border-bottom: 2px solid var(--bp-border); }
-    .flag-table td { padding: 8px 12px; border-bottom: 1px solid var(--bp-border); color: var(--bp-text-secondary); }
+    /* ── P1 typography upgrade ─────────────────────────────────── */
+    /* Reading progress bar (top thin line, scroll-driven) */
+    .reading-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--bp-link); z-index: 100; transition: width 0.05s linear; }
+
+    /* Article wrapper */
+    .article-body { max-width: 720px; margin: 0 auto; padding: 0 20px 96px; }
+
+    /* Title — bigger, tighter */
+    .article-body > h1 { font-size: 36px; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; margin: 32px 0 16px; color: var(--bp-text); }
+
+    /* Section heading — accent left-border + bigger */
+    .article-body h2 { font-size: 26px; font-weight: 700; line-height: 1.3; margin: 56px 0 20px; padding: 4px 0 6px 16px; border-left: 4px solid var(--bp-link); border-bottom: none; color: var(--bp-text); letter-spacing: -0.01em; }
+    .article-body h3 { font-size: 19px; font-weight: 600; margin: 32px 0 12px; color: var(--bp-text); }
+
+    /* Body — ~16px / 1.78 (matches book-prose) */
+    .article-body p { color: var(--bp-text-secondary); line-height: 1.78; margin: 0 0 18px; font-size: 16.5px; }
+    .article-body strong { color: var(--bp-text); font-weight: 600; }
+    .article-body em { color: var(--bp-text); font-style: italic; }
+
+    /* Lists */
+    .article-body ul, .article-body ol { color: var(--bp-text-secondary); line-height: 1.78; margin: 0 0 18px; padding-left: 24px; font-size: 16.5px; }
+    .article-body li { margin-bottom: 8px; }
+
+    /* Inline code */
+    .article-body code { background: var(--bp-bg-alt); padding: 2px 6px; border-radius: 4px; font-size: 14px; color: var(--bp-link); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    /* Blockquote — pull-quote style */
+    .article-body blockquote { border-left: 4px solid var(--bp-link); padding: 18px 24px; margin: 24px 0; background: var(--bp-bg-alt); border-radius: 0 12px 12px 0; }
+    .article-body blockquote p { margin: 0; font-style: italic; font-size: 17px; color: var(--bp-text); line-height: 1.7; }
+
+    /* Links */
+    .article-body a { color: var(--bp-link); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s; }
+    .article-body a:hover { border-bottom-color: var(--bp-link); text-decoration: none; }
+
+    /* Meta row */
+    .article-meta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin: 16px 0 40px; font-size: 14px; color: var(--bp-text-muted); }
+    .article-tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; background: var(--bp-badge-purple-bg); color: var(--bp-badge-purple-text); }
+
+    /* Language toggle */
+    .lang-toggle { display: inline-flex; gap: 4px; padding: 3px; background: var(--bp-bg-alt); border: 1px solid var(--bp-border); border-radius: 999px; }
+    .lang-toggle a { padding: 4px 12px; border-radius: 999px; font-size: 13px; font-weight: 500; color: var(--bp-text-muted); text-decoration: none; border: none; }
+    .lang-toggle a:hover { color: var(--bp-text); border: none; }
+    .lang-toggle a.active { background: var(--bp-link); color: white; }
+
+    /* Ref card — bigger padding, hover lift */
+    .ref-card { display: block; padding: 16px 20px; margin: 12px 0; background: var(--bp-card-bg); border: 1px solid var(--bp-border); border-radius: 10px; text-decoration: none; transition: border-color 0.2s, transform 0.2s; }
+    .ref-card:hover { border-color: var(--bp-link); text-decoration: none; transform: translateY(-1px); border-bottom-color: var(--bp-link); }
+    .ref-card-title { font-size: 15px; font-weight: 600; color: var(--bp-text); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .ref-card-desc { font-size: 14px; color: var(--bp-text-secondary); margin-top: 6px; line-height: 1.55; }
+    .ref-card-stars { font-size: 12px; color: var(--bp-link); margin-top: 6px; font-weight: 500; }
+
+    /* Table */
+    .flag-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
+    .flag-table th { text-align: left; padding: 10px 12px; background: var(--bp-bg-alt); color: var(--bp-text); font-weight: 600; border-bottom: 2px solid var(--bp-border); }
+    .flag-table td { padding: 10px 12px; border-bottom: 1px solid var(--bp-border); color: var(--bp-text-secondary); line-height: 1.5; }
+
+    /* Mobile tightening */
+    @media (max-width: 640px) {
+      .article-body { padding: 0 16px 72px; }
+      .article-body > h1 { font-size: 28px; }
+      .article-body h2 { font-size: 22px; padding-left: 12px; }
+      .article-body p, .article-body ul, .article-body ol { font-size: 16px; }
+    }
   </style>
 </head>
 <body class="bp-body">
@@ -66,13 +113,22 @@
     })();
   </script>
 
+  <div class="reading-progress" id="reading-progress"></div>
+
   <main class="bp-main">
     <nav class="bp-breadcrumb" style="margin-top:8px;font-size:13px;color:var(--bp-text-muted)">
       <a href="/">Home</a> &gt; <a href="/blog/">Blog</a> &gt; <span>Solo SaaS Skill Stack 2026</span>
     </nav>
 
     <article class="article-body">
-      <h1 style="font-size:28px;line-height:1.3;margin:24px 0 0;color:var(--bp-text)">How I'd Build a SaaS Solo in 6 Weeks Using AI Skills (2026 Stack)</h1>
+      <div style="display:flex;justify-content:flex-end;margin:24px 0 0">
+        <div class="lang-toggle">
+          <a href="/blog/skill-stack-solo-saas-2026/" class="active">EN</a>
+          <a href="/blog/skill-stack-solo-saas-2026/zh/">中文</a>
+        </div>
+      </div>
+
+      <h1>How I'd Build a SaaS Solo in 6 Weeks Using AI Skills (2026 Stack)</h1>
 
       <div class="article-meta">
         <span>By <a href="https://x.com/GoSailGlobal">Jason Zhu</a></span>
@@ -246,5 +302,21 @@
       </p>
     </article>
   </main>
+
+  <script>
+    // Reading progress bar — updates as the user scrolls the article.
+    (function () {
+      var bar = document.getElementById("reading-progress");
+      if (!bar) return;
+      function update() {
+        var h = document.documentElement;
+        var scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+        bar.style.width = (Math.min(1, Math.max(0, scrolled)) * 100).toFixed(1) + "%";
+      }
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update);
+      update();
+    })();
+  </script>
 </body>
 </html>

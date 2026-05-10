@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>独立开发者 6 周用 AI Skills 做 SaaS（2026 完整 Stack） | Agent Skills Hub</title>
+  <meta name="description" content="一人公司从想法到上线 6 周。完整 5 层 Skill 栈：验证 → PRD → 多 Agent 团队 → 商业诊断 → GTM。19 个真实项目示范。" />
+  <meta name="keywords" content="独立开发者, indie hacker, AI Skills, SaaS 上线, claude code, 商业诊断, GTM, founder playbook, dbskill, vibe coding, MVP" />
+  <meta property="og:title" content="独立开发者 6 周用 AI Skills 做 SaaS (2026)" />
+  <meta property="og:description" content="一人公司在 2026 年的 5 层 Skill stack — 从验证想法到拿下首批用户。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://agentskillshub.top/blog/skill-stack-solo-saas-2026/zh/" />
+  <meta property="og:site_name" content="Agent Skills Hub" />
+  <meta property="og:image" content="https://agentskillshub.top/og-image.png" />
+  <meta property="article:published_time" content="2026-05-04" />
+  <meta property="article:author" content="Jason Zhu" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="独立开发者 6 周用 AI Skills 做 SaaS (2026)" />
+  <meta name="twitter:description" content="5 层 · 19 个 skill · 想法 → 上线 6 周。真实示范。" />
+  <meta name="twitter:site" content="@GoSailGlobal" />
+  <link rel="canonical" href="https://agentskillshub.top/blog/skill-stack-solo-saas-2026/zh/" />
+  <link rel="alternate" hreflang="en" href="https://agentskillshub.top/blog/skill-stack-solo-saas-2026/" />
+  <link rel="alternate" hreflang="zh" href="https://agentskillshub.top/blog/skill-stack-solo-saas-2026/zh/" />
+  <link rel="alternate" hreflang="x-default" href="https://agentskillshub.top/blog/skill-stack-solo-saas-2026/" />
+  <link rel="stylesheet" href="/best-pages.css" />
+  <script defer data-domain="agentskillshub.top" src="https://plausible.io/js/script.js"></script>
+  <style>
+    /* ── P1 typography upgrade ─────────────────────────────────── */
+    .reading-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--bp-link); z-index: 100; transition: width 0.05s linear; }
+
+    .article-body { max-width: 720px; margin: 0 auto; padding: 0 20px 96px; }
+
+    .article-body > h1 { font-size: 36px; line-height: 1.25; font-weight: 800; letter-spacing: -0.01em; margin: 32px 0 16px; color: var(--bp-text); }
+
+    .article-body h2 { font-size: 26px; font-weight: 700; line-height: 1.35; margin: 56px 0 20px; padding: 4px 0 6px 16px; border-left: 4px solid var(--bp-link); border-bottom: none; color: var(--bp-text); }
+    .article-body h3 { font-size: 19px; font-weight: 600; margin: 32px 0 12px; color: var(--bp-text); }
+
+    .article-body p { color: var(--bp-text-secondary); line-height: 1.85; margin: 0 0 18px; font-size: 16.5px; }
+    .article-body strong { color: var(--bp-text); font-weight: 600; }
+    .article-body em { color: var(--bp-text); font-style: italic; }
+
+    .article-body ul, .article-body ol { color: var(--bp-text-secondary); line-height: 1.85; margin: 0 0 18px; padding-left: 24px; font-size: 16.5px; }
+    .article-body li { margin-bottom: 8px; }
+
+    .article-body code { background: var(--bp-bg-alt); padding: 2px 6px; border-radius: 4px; font-size: 14px; color: var(--bp-link); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    .article-body blockquote { border-left: 4px solid var(--bp-link); padding: 18px 24px; margin: 24px 0; background: var(--bp-bg-alt); border-radius: 0 12px 12px 0; }
+    .article-body blockquote p { margin: 0; font-style: normal; font-size: 17px; color: var(--bp-text); line-height: 1.78; }
+
+    .article-body a { color: var(--bp-link); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s; }
+    .article-body a:hover { border-bottom-color: var(--bp-link); text-decoration: none; }
+
+    .article-meta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin: 16px 0 40px; font-size: 14px; color: var(--bp-text-muted); }
+    .article-tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; background: var(--bp-badge-purple-bg); color: var(--bp-badge-purple-text); }
+
+    .lang-toggle { display: inline-flex; gap: 4px; padding: 3px; background: var(--bp-bg-alt); border: 1px solid var(--bp-border); border-radius: 999px; }
+    .lang-toggle a { padding: 4px 12px; border-radius: 999px; font-size: 13px; font-weight: 500; color: var(--bp-text-muted); text-decoration: none; border: none; }
+    .lang-toggle a:hover { color: var(--bp-text); border: none; }
+    .lang-toggle a.active { background: var(--bp-link); color: white; }
+
+    .ref-card { display: block; padding: 16px 20px; margin: 12px 0; background: var(--bp-card-bg); border: 1px solid var(--bp-border); border-radius: 10px; text-decoration: none; transition: border-color 0.2s, transform 0.2s; }
+    .ref-card:hover { border-color: var(--bp-link); text-decoration: none; transform: translateY(-1px); border-bottom-color: var(--bp-link); }
+    .ref-card-title { font-size: 15px; font-weight: 600; color: var(--bp-text); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .ref-card-desc { font-size: 14px; color: var(--bp-text-secondary); margin-top: 6px; line-height: 1.65; }
+    .ref-card-stars { font-size: 12px; color: var(--bp-link); margin-top: 6px; font-weight: 500; }
+
+    .flag-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
+    .flag-table th { text-align: left; padding: 10px 12px; background: var(--bp-bg-alt); color: var(--bp-text); font-weight: 600; border-bottom: 2px solid var(--bp-border); }
+    .flag-table td { padding: 10px 12px; border-bottom: 1px solid var(--bp-border); color: var(--bp-text-secondary); line-height: 1.6; }
+
+    @media (max-width: 640px) {
+      .article-body { padding: 0 16px 72px; }
+      .article-body > h1 { font-size: 28px; }
+      .article-body h2 { font-size: 22px; padding-left: 12px; }
+      .article-body p, .article-body ul, .article-body ol { font-size: 16px; }
+    }
+  </style>
+</head>
+<body class="bp-body">
+  <header id="site-header" class="bp-header">
+    <div class="bp-header-inner">
+      <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none">
+        <span class="bp-brand">Agent Skills Hub</span>
+      </a>
+      <nav class="bp-nav-links">
+        <a href="/" class="bp-nav-link">Explore</a>
+        <a href="/best/" class="bp-nav-link">Trending</a>
+        <a href="/blog/" class="bp-nav-link bp-nav-link--active">Blog</a>
+      </nav>
+    </div>
+  </header>
+  <script>
+    (function(){
+      var t=localStorage.getItem('theme');
+      if(t!=='light'){
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+
+  <div class="reading-progress" id="reading-progress"></div>
+
+  <main class="bp-main">
+    <nav class="bp-breadcrumb" style="margin-top:8px;font-size:13px;color:var(--bp-text-muted)">
+      <a href="/">首页</a> &gt; <a href="/blog/">博客</a> &gt; <span>独立开发者 6 周做 SaaS</span>
+    </nav>
+
+    <article class="article-body">
+      <div style="display:flex;justify-content:flex-end;margin:24px 0 0">
+        <div class="lang-toggle">
+          <a href="/blog/skill-stack-solo-saas-2026/">EN</a>
+          <a href="/blog/skill-stack-solo-saas-2026/zh/" class="active">中文</a>
+        </div>
+      </div>
+
+      <h1>独立开发者 6 周用 AI Skills 做 SaaS（2026 完整 Stack）</h1>
+
+      <div class="article-meta">
+        <span>作者 <a href="https://x.com/GoSailGlobal">Jason Zhu</a></span>
+        <span>&middot;</span>
+        <span>2026 年 5 月 4 日</span>
+        <span>&middot;</span>
+        <span>9 分钟阅读</span>
+        <span class="article-tag">独立开发者</span>
+        <span class="article-tag">AI Skills</span>
+        <span class="article-tag">SaaS</span>
+      </div>
+
+      <blockquote>
+        <p>2024 到 2025 年初，我一个人做了三个 SaaS 产品，每个 4 到 6 个月。到了 2026 年 5 月，凭借现在的 AI Skill 生态，同样的范围只要 6 周。这篇文章拆给你看：完整的 5 层 stack，每一层我会装哪些 skill —— 19 个一手验证过的项目。</p>
+      </blockquote>
+
+      <h2>6 周时间线</h2>
+
+      <p>这是我现在会给自己排的真实日历。每周对应 Skill stack 的一层：</p>
+
+      <table class="flag-table">
+        <thead><tr><th>周</th><th>目标</th><th>Skill 层</th><th>产出</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>验证想法、找到真实痛点</td><td>第 1 层：Validation</td><td>1 页 PRD 草稿 + 5 个用户访谈问题</td></tr>
+          <tr><td>2</td><td>写规格、定技术栈</td><td>第 2 层：PRD 生成</td><td>完整 PRD + 技术设计 + 任务拆解</td></tr>
+          <tr><td>3-4</td><td>构建 MVP</td><td>第 3 层：多 Agent 团队</td><td>v0.1 已部署</td></tr>
+          <tr><td>5</td><td>诊断、迭代、修 PMF</td><td>第 4 层：商业诊断</td><td>v0.2 把对的事修对</td></tr>
+          <tr><td>6</td><td>上线、拿到首批 100 用户</td><td>第 5 层：GTM 执行</td><td>Product Hunt + X/LinkedIn + 100 注册</td></tr>
+        </tbody>
+      </table>
+
+      <p>跟 2024 年的差别在哪？2024 年这张表里每一周都是一个月。压缩从一件事来：<strong>每个环节现在都有高质量、有作者署名的 skill 存在</strong>。它们把"研究该怎么做"变成"输入一条命令拿到正确答案"。下面是每一层我会装的工具。</p>
+
+      <h2>第 1 层 · Validation（第 1 周）</h2>
+
+      <p>大多数独立 SaaS 死在创始人造了一个没人想要的东西。Validation 这一层的存在就是让这种错误更难犯。</p>
+
+      <a class="ref-card" href="https://github.com/getagentseal/founder-playbook">
+        <div class="ref-card-title">getagentseal/founder-playbook</div>
+        <div class="ref-card-desc">14 本经典商业书蒸馏成 AI 原生 skill：Crossing the Chasm、The Mom Test、Lean Startup。当你问"这个想法到底行不行"时，把它当作框架参考。</div>
+        <div class="ref-card-stars">⭐ 145 · MIT</div>
+      </a>
+
+      <a class="ref-card" href="https://github.com/joeseesun/lennys-podcast-newsletter">
+        <div class="ref-card-title">joeseesun/lennys-podcast-newsletter</div>
+        <div class="ref-card-desc">Lenny Rachitsky 的完整知识库 —— 638 篇内容（289 个播客文字稿 + 349 篇 newsletter）。过去 5 年事实上的 PM playbook，可以从任何 agent 里查询。</div>
+        <div class="ref-card-stars">⭐ 161</div>
+      </a>
+
+      <a class="ref-card" href="https://github.com/rrred0324/senior-analyst">
+        <div class="ref-card-title">rrred0324/senior-analyst</div>
+        <div class="ref-card-desc">触发 <code>/senior_analyst</code> 进行结构化商业分析、行业建模和投资尽调输出。零 API key 需求。</div>
+        <div class="ref-card-stars">⭐ 53</div>
+      </a>
+
+      <p>实际工作流：把你的想法 + 客户 + 竞争对手 URL 粘进去，问 <em>"这是真痛点还是 vitamin？"</em> 用 Lenny 的归档对照已经发生过的 PMF 故事。把 senior-analyst 输出的 5 个问题带进你前 5 个用户访谈。周五要么砍掉这个想法，要么手上有 1 页 PRD 草稿。</p>
+
+      <h2>第 2 层 · PRD 生成（第 2 周）</h2>
+
+      <p>这一步是大多数 founder 浪费两周写糟糕线框图的地方。当下的 skill 两天搞定。</p>
+
+      <a class="ref-card" href="https://github.com/KhazP/vibe-coding-prompt-template">
+        <div class="ref-card-title">KhazP/vibe-coding-prompt-template</div>
+        <div class="ref-card-desc">生成 PRD、技术设计、MVP 的模板 + 工作流。2026 年安装最多的 PRD 脚手架 —— 2.2K stars，独立开发者每天在用。</div>
+        <div class="ref-card-stars">⭐ 2.2K · Claude Skill</div>
+      </a>
+
+      <a class="ref-card" href="https://github.com/anombyte93/prd-taskmaster">
+        <div class="ref-card-title">anombyte93/prd-taskmaster</div>
+        <div class="ref-card-desc">PRD 生成 + Taskmaster 集成：先写 PRD，再拆成 build agent 可以执行的可追踪任务列表。</div>
+        <div class="ref-card-stars">⭐ 198</div>
+      </a>
+
+      <p>第 2 周周五，你手上有：4 页 PRD、技术设计（DB schema + API 契约）、30 条任务清单，等你的 build agent 来处理。</p>
+
+      <h2>第 3 层 · 多 Agent 构建团队（第 3-4 周）</h2>
+
+      <p>这一层真正省下你几个月时间。不再是"先写前端、再写后端、最后写测试"，而是同时启动多个有角色的 agent 并行干活。</p>
+
+      <a class="ref-card" href="https://github.com/peterfei/ai-agent-team">
+        <div class="ref-card-title">peterfei/ai-agent-team</div>
+        <div class="ref-card-desc">预配置好的 24/7 开发团队 —— PM、前端、后端、QA、DevOps、技术 lead。一次安装，6 个角色，支持中英文命令。</div>
+        <div class="ref-card-stars">⭐ 287</div>
+      </a>
+
+      <a class="ref-card" href="https://github.com/Mathews-Tom/armory">
+        <div class="ref-card-title">Mathews-Tom/armory</div>
+        <div class="ref-card-desc">为 AI coding agent 精挑的生产级 skill。开发流程经过实战验证。配合 ai-agent-team 给每个角色补足深度。</div>
+        <div class="ref-card-stars">⭐ 220</div>
+      </a>
+
+      <a class="ref-card" href="https://github.com/asklokesh/loki-mode">
+        <div class="ref-card-title">asklokesh/loki-mode</div>
+        <div class="ref-card-desc">多 agent 自治 SDLC 框架。从规格到部署：PRD → GitHub issue → OpenAPI → 已部署代码。2024 年的你做梦都想要的 pipeline。</div>
+        <div class="ref-card-stars">⭐ 872</div>
+      </a>
+
+      <p>两周做出 MVP 是现实的。难的不再是"agent 能不能写代码"—— 它们可以。难的是把规格定得足够紧，避免在被漏掉的验收标准上反复 re-roll。这就是为什么第 2 层这么重要。</p>
+
+      <h2>第 4 层 · 商业诊断（第 5 周）</h2>
+
+      <p>现在你已经部署了 v0.1。它一定有 3 件事是错的。诊断这一层的存在就是为了在你浪费下一个迭代周期之前找出是哪 3 件。</p>
+
+      <a class="ref-card" href="https://github.com/dontbesilent2025/dbskill">
+        <div class="ref-card-title">dontbesilent2025/dbskill</div>
+        <div class="ref-card-desc">来自 dontbesilent 的"商业诊断" Claude Code skills。中文圈安装最多的商业诊断包 —— 4.1K stars，每周还在涨。</div>
+        <div class="ref-card-stars">⭐ 4.1K · MIT</div>
+      </a>
+
+      <a class="ref-card" href="https://github.com/sahibzada-allahyar/YC-Killer">
+        <div class="ref-card-title">sahibzada-allahyar/YC-Killer</div>
+        <div class="ref-card-desc">企业级 AI agent 库，跑 YC 风格的框架（problem/customer/wedge/PMF）扫过你的草稿。</div>
+        <div class="ref-card-stars">⭐ 2.7K</div>
+      </a>
+
+      <a class="ref-card" href="https://github.com/joeseesun/qiaomu-design-advisor">
+        <div class="ref-card-title">joeseesun/qiaomu-design-advisor</div>
+        <div class="ref-card-desc">偏执的设计批评家 —— 乔布斯式直觉 + Dieter Rams 式功能纯粹主义。审你 UX 层的盲区，找出你看了 3 周已经麻木的问题。</div>
+        <div class="ref-card-stars">⭐ 232</div>
+      </a>
+
+      <p>工作流：把你部署后的 URL + 第一周分析数据 + 前 10 个用户访谈喂给 <code>dbskill</code>，再用 <code>YC-Killer</code> 在同一份素材上跑一遍当作 second opinion。两个一致的地方先修。两个不一致的地方，你得自己想清楚。</p>
+
+      <h2>第 5 层 · GTM 执行（第 6 周）</h2>
+
+      <p>分发是当代独立 SaaS 的瓶颈。建造已经被民主化。触达真人没有。所以 2026 年这一层的杠杆最大。</p>
+
+      <a class="ref-card" href="https://github.com/onvoyage-ai/gtm-engineer-skills">
+        <div class="ref-card-title">onvoyage-ai/gtm-engineer-skills</div>
+        <div class="ref-card-desc">为 AEO（Answer Engine Optimization）和 GEO（Generative Engine Optimization）做优化。Google AI Overview 把第一页点击率吃掉之后，SEO 进化成的样子。</div>
+        <div class="ref-card-stars">⭐ 909</div>
+      </a>
+
+      <a class="ref-card" href="https://github.com/Gingiris/gingiris-launch">
+        <div class="ref-card-title">Gingiris/gingiris-launch</div>
+        <div class="ref-card-desc">来自 Product Hunt 30 次日榜冠军的 launch playbook。完整的 go-to-market 模板，覆盖发布前 6 周 —— 不是常见的"发布日 24 小时手忙脚乱"那种。</div>
+        <div class="ref-card-stars">⭐ 167</div>
+      </a>
+
+      <a class="ref-card" href="https://github.com/akseolabs-seo/AK-Threads-booster">
+        <div class="ref-card-title">akseolabs-seo/AK-Threads-booster</div>
+        <div class="ref-card-desc">数据驱动的 Threads/X 写作决策系统。用你的历史帖子 + 平台算法挑选话题、起草、预测互动量、发布后做复盘。</div>
+        <div class="ref-card-stars">⭐ 192</div>
+      </a>
+
+      <p>选一个主渠道 + 一个辅助渠道。主渠道先深耕，辅助渠道遇到机会就上。2026 年大多数 B2B 独立 SaaS 的主渠道是 X（开发者受众）或 LinkedIn（运营者受众），用 Product Hunt 当发布日的放大器。</p>
+
+      <h2>2026 的不公平优势（与代价）</h2>
+
+      <p>把每一层成本加起来：5 层免费 + 1 层偶尔付费（你的 LLM 账单，每月 $40-200）。一个人 + 一台机器 + 这套 stack，相当于 2024 年 5 人 startup 的产能，时间线压缩 10 倍。</p>
+
+      <p>但有个代价 —— 也是我在<a href="/book/ch03-market-landscape/">《Skill 蓝皮书》第 3 章</a>里详细记录过的：<strong>建造已经民主化，分发没有</strong>。今天 GitHub 上 70K+ 开源 agent 项目里，54.1% 是零 stars。这个生态系统的基尼系数 0.983 —— 比 App Store、npm、YouTube 都更悬殊。</p>
+
+      <p>翻译过来：瓶颈已经移位。6 周构建是简单的部分。赢得前 100 个用户的信任 —— 然后下一个 1,000 —— 才是真正的工作。第 5 层不是最后一周，而是被低估的那一周。如果今天我重新开始，我会把第 6 周和第 7-8 周都分给 GTM，并且接受这才是项目真实的形状。</p>
+
+      <h2>从哪开始</h2>
+
+      <p>想要这篇文章里 19 个手挑 skill 的完整列表，加上你场景下最匹配的 30 个邻居，去：</p>
+
+      <ul>
+        <li><a href="/best/business-diagnosis/">/best/business-diagnosis/</a> — 完整精选清单 + featured 锚点</li>
+        <li><a href="/book/ch11-consulting-and-enterprise/">《Skill 蓝皮书》第 11 章</a> — 生态目前还缺的咨询匹配层</li>
+        <li><a href="/best/agent-deployment/">/best/agent-deployment/</a> — 上线之后部署到哪</li>
+        <li><a href="/best/agent-memory/">/best/agent-memory/</a> — 给你的 agent 跨 session 记忆能力</li>
+      </ul>
+
+      <p>找到了应该在这个清单里的 skill？<a href="/submit/">在这里提交</a> —— Hub 每 8 小时重新索引。</p>
+
+      <p style="margin-top:32px;color:var(--bp-text-muted);font-size:13px">
+        <em>关于完整生态方法论的免费书：<a href="/book/">《Skill 蓝皮书 2026》v1.1</a>（CC BY-NC-SA 4.0）。</em>
+      </p>
+    </article>
+  </main>
+
+  <script>
+    // Reading progress bar — 阅读进度条，跟着滚动更新
+    (function () {
+      var bar = document.getElementById("reading-progress");
+      if (!bar) return;
+      function update() {
+        var h = document.documentElement;
+        var scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+        bar.style.width = (Math.min(1, Math.max(0, scrolled)) * 100).toFixed(1) + "%";
+      }
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update);
+      update();
+    })();
+  </script>
+</body>
+</html>
