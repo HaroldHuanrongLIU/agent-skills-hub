@@ -27,9 +27,9 @@ const STEPS = [
     titleEn: "Smart Matching",
     titleZh: "智能匹配",
     descEn:
-      "76 scenario pages match tools to your use case. Compare side-by-side, filter by category, language, or platform.",
+      "79 scenario pages match tools to your use case. Compare side-by-side, filter by category, language, or platform.",
     descZh:
-      "76 个场景页面将工具匹配到你的使用场景。支持并排对比、按分类/语言/平台筛选。",
+      "79 个场景页面将工具匹配到你的使用场景。支持并排对比、按分类/语言/平台筛选。",
   },
 ];
 

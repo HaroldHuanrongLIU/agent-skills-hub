@@ -515,6 +515,16 @@
       "max_results": 10,
       "tag_matches": [
         "document"
+      ],
+      "featured": [
+        "PDFMathTranslate/PDFMathTranslate",
+        "yusufkaraaslan/Skill_Seekers",
+        "joeseesun/qiaomu-anything-to-notebooklm",
+        "chrisryugj/kordoc",
+        "SylphxAI/pdf-reader-mcp",
+        "magicyuan876/mineru-tianshu",
+        "opendatalab/MinerU-Document-Explorer",
+        "deusyu/translate-book"
       ]
     },
     "related": [
@@ -974,6 +984,16 @@
       "max_results": 10,
       "tag_matches": [
         "email"
+      ],
+      "featured": [
+        "enescingoz/awesome-n8n-templates",
+        "zubair-trabzada/ai-marketing-claude",
+        "growthenginenowoslawski/coldoutboundskills",
+        "joeseesun/lennys-podcast-newsletter",
+        "CosmoBlk/email-marketing-bible",
+        "GongRzhe/Gmail-MCP-Server",
+        "kaymen99/langgraph-email-automation",
+        "agenticmail/agenticmail"
       ]
     },
     "related": [
@@ -2374,7 +2394,17 @@
         "design-system"
       ],
       "min_results": 3,
-      "max_results": 30
+      "max_results": 30,
+      "featured": [
+        "nexu-io/open-design",
+        "GLips/Figma-Context-MCP",
+        "alchaincyf/huashu-design",
+        "google-labs-code/stitch-skills",
+        "OpenCoworkAI/open-codesign",
+        "joeseesun/qiaomu-mondo-poster-design",
+        "op7418/logo-generator-skill",
+        "zanwei/design-dna"
+      ]
     },
     "related": [
       "web-development",
@@ -2957,6 +2987,209 @@
       "business-diagnosis",
       "personal-knowledge",
       "anti-slop"
+    ]
+  },
+  {
+    "slug": "meeting-tools",
+    "title": "Meeting Tools & Transcription",
+    "description": "AI meeting stack — real-time transcription, automatic minutes, action item extraction, multilingual captions, audio capture, Lark/Feishu/Zoom integration. Every standup, sales call, podcast covered.",
+    "match": {
+      "categories": [],
+      "primary_keywords": [
+        "transcrib",
+        "transcription",
+        "meeting note",
+        "meeting minute",
+        "meeting record",
+        "meeting copilot",
+        "speech-to-text",
+        "speech to text",
+        "stt",
+        "whisper",
+        "subtitle",
+        "live caption"
+      ],
+      "secondary_keywords": [
+        "audio capture",
+        "asr",
+        "speaker diarization",
+        "diarize",
+        "zoom",
+        "teams",
+        "feishu meeting",
+        "lark meeting",
+        "conference call",
+        "voice note",
+        "voice memo",
+        "real-time",
+        "echo cancellation"
+      ],
+      "topic_matches": [
+        "transcription",
+        "meeting",
+        "whisper",
+        "stt",
+        "speech-to-text",
+        "subtitle",
+        "asr",
+        "audio"
+      ],
+      "exclude_keywords": [
+        "agent orchestration",
+        "agent team",
+        "multi-agent",
+        "video editing",
+        "video generator",
+        "youtube transcript"
+      ],
+      "min_results": 5,
+      "max_results": 25,
+      "featured": [
+        "silverstein/minutes",
+        "Laxcorp-Research/project-raven",
+        "video-db/call.md",
+        "XimilalaXiang/DeLive",
+        "jarrodwatts/claude-stt",
+        "JimLiu/whisper-subtitles",
+        "10xChengTu/input0",
+        "zarazhangrui/lark-minutes-tasks"
+      ],
+      "tag_matches": [
+        "voice"
+      ]
+    },
+    "related": [
+      "voice-agent",
+      "personal-knowledge",
+      "workflow-automation"
+    ]
+  },
+  {
+    "slug": "spreadsheet-ai",
+    "title": "Spreadsheet & Excel AI Tools",
+    "description": "AI for Excel, Google Sheets, CSV — automated formulas, pivot tables, data summarization, MCP servers for read/write, structured extraction, agent-driven reporting. The full data layer for non-engineers.",
+    "match": {
+      "categories": [],
+      "primary_keywords": [
+        "spreadsheet",
+        "excel",
+        "google sheet",
+        "xlsx",
+        "csv",
+        "pivot table",
+        "excel automation",
+        "excel agent",
+        "sheet automation"
+      ],
+      "secondary_keywords": [
+        "data summarizer",
+        "report generation",
+        "data analysis",
+        "formula",
+        "table extraction",
+        "structured json",
+        "google drive"
+      ],
+      "topic_matches": [
+        "excel",
+        "spreadsheet",
+        "google-sheets",
+        "xlsx",
+        "csv",
+        "data-analysis"
+      ],
+      "exclude_keywords": [
+        "video",
+        "ppt only",
+        "meeting"
+      ],
+      "min_results": 5,
+      "max_results": 25,
+      "featured": [
+        "haris-musa/excel-mcp-server",
+        "negokaz/excel-mcp-server",
+        "xing5/mcp-google-sheets",
+        "tfriedel/claude-office-skills",
+        "coffeefuelbump/csv-data-summarizer-claude-skill",
+        "sbroenne/mcp-server-excel",
+        "SylvianAI/sv-excel-agent",
+        "isaacphi/mcp-gdrive"
+      ],
+      "tag_matches": []
+    },
+    "related": [
+      "data-visualization",
+      "data-pipeline",
+      "document-parsing"
+    ]
+  },
+  {
+    "slug": "video-editing",
+    "title": "AI Video Editing & Generation",
+    "description": "Open-source AI video stack — subtitle generation, multilingual dubbing, short-video maker for TikTok/Reels/Shorts, Remotion programmatic video, podcast-to-video, automated captions and translations.",
+    "match": {
+      "categories": [],
+      "primary_keywords": [
+        "video editing",
+        "video edit",
+        "video generator",
+        "video maker",
+        "video automation",
+        "shorts",
+        "tiktok",
+        "reels",
+        "instagram reel",
+        "captions",
+        "subtitle generation",
+        "subtitle translat",
+        "video subtitling",
+        "video translation",
+        "podcast video"
+      ],
+      "secondary_keywords": [
+        "remotion",
+        "ffmpeg",
+        "yt-shorts",
+        "youtube shorts",
+        "dubbing",
+        "video dubbing",
+        "video editor",
+        "video script",
+        "auto cut"
+      ],
+      "topic_matches": [
+        "video",
+        "shorts",
+        "tiktok",
+        "reels",
+        "remotion",
+        "subtitle",
+        "captions"
+      ],
+      "exclude_keywords": [
+        "video conferencing",
+        "video call agent"
+      ],
+      "min_results": 5,
+      "max_results": 25,
+      "featured": [
+        "WEIFENG2333/VideoCaptioner",
+        "krillinai/KrillinAI",
+        "FireRedTeam/FireRed-OpenStoryline",
+        "Ceeon/videocut-skills",
+        "digitalsamba/claude-code-video-toolkit",
+        "gyoridavid/short-video-maker",
+        "wshuyi/remotion-video-skill",
+        "op7418/Video-Wrapper-Skills"
+      ],
+      "tag_matches": [
+        "video"
+      ]
+    },
+    "related": [
+      "content-syndication",
+      "ai-design",
+      "voice-agent"
     ]
   }
 ]
