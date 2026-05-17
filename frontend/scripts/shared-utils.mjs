@@ -143,7 +143,7 @@ async function fetchPageWithRetry(url, headers, attempt = 1) {
 
 export async function fetchAllSkills() {
   const skills = [];
-  let offset = 0;
+  let lastId = 0;
   const limit = 1000;
   const fields = [
     "id", "repo_full_name", "repo_name", "author_name", "author_avatar_url",
@@ -153,8 +153,13 @@ export async function fetchAllSkills() {
     "open_issues", "total_commits",
   ].join(",");
 
+  // Keyset pagination by primary key. Deep OFFSET (offset=77000&order=stars.desc)
+  // forced Postgres to sort + skip ~77K rows on every page, exceeding Supabase's
+  // statement_timeout → 57014 errors that blocked deploys. Ordering by the
+  // indexed `id` PK turns each page into an O(limit) index range scan. No
+  // consumer depends on fetch order — every generator re-sorts its own data.
   while (true) {
-    const url = `${SUPABASE_URL}/rest/v1/skills?select=${fields}&order=stars.desc&offset=${offset}&limit=${limit}`;
+    const url = `${SUPABASE_URL}/rest/v1/skills?select=${fields}&order=id.asc&id=gt.${lastId}&limit=${limit}`;
     const data = await fetchPageWithRetry(url, {
       apikey: SUPABASE_ANON_KEY,
       Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
@@ -166,7 +171,7 @@ export async function fetchAllSkills() {
       }
       skills.push(row);
     }
-    offset += limit;
+    lastId = data[data.length - 1].id;
     if (data.length < limit) break;
   }
 

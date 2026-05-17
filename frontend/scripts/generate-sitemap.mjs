@@ -50,11 +50,14 @@ function shouldIndex(skill) {
 
 async function fetchAllSkills() {
   const skills = [];
-  let offset = 0;
+  let lastId = 0;
   const limit = 1000;
 
+  // Keyset pagination by primary key — deep OFFSET on the 78K-row skills table
+  // forced a sort + skip on every page and exceeded Supabase's statement_timeout
+  // (57014), failing deploys. Ordering by the indexed `id` PK keeps each page O(limit).
   while (true) {
-    const url = `${SUPABASE_URL}/rest/v1/skills?select=repo_full_name,stars,last_commit_at,category,description,readme_size&order=stars.desc&offset=${offset}&limit=${limit}`;
+    const url = `${SUPABASE_URL}/rest/v1/skills?select=id,repo_full_name,stars,last_commit_at,category,description,readme_size&order=id.asc&id=gt.${lastId}&limit=${limit}`;
     const res = await fetch(url, {
       headers: {
         apikey: SUPABASE_ANON_KEY,
@@ -62,9 +65,12 @@ async function fetchAllSkills() {
       },
     });
     const data = await res.json();
+    if (!Array.isArray(data)) {
+      throw new Error(`Sitemap skills fetch failed: ${JSON.stringify(data).slice(0, 200)}`);
+    }
     if (!data.length) break;
     skills.push(...data);
-    offset += limit;
+    lastId = data[data.length - 1].id;
     if (data.length < limit) break;
   }
   return skills;
