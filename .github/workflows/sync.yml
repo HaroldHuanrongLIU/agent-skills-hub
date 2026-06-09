@@ -26,6 +26,80 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Check GH_TOKEN expiry
+        id: token_check
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          # Fine-grained PATs and classic PATs expose expiry via this header.
+          # GitHub App installation tokens / GITHUB_TOKEN don't (no expiration).
+          EXPIRY=$(curl -sI -H "Authorization: Bearer $GH_TOKEN" \
+            https://api.github.com/user \
+            | grep -i 'github-authentication-token-expiration:' \
+            | awk -F': ' '{print $2}' \
+            | tr -d '\r')
+          if [ -z "$EXPIRY" ]; then
+            echo "ℹ️  Token has no expiration header (GitHub App or non-expiring PAT)"
+            echo "days_left=999" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          EXPIRY_TS=$(date -u -d "$EXPIRY" +%s)
+          NOW_TS=$(date -u +%s)
+          DAYS_LEFT=$(( (EXPIRY_TS - NOW_TS) / 86400 ))
+          echo "Token expires at $EXPIRY ($DAYS_LEFT days from now)"
+          echo "days_left=$DAYS_LEFT" >> $GITHUB_OUTPUT
+
+      - name: Warn if GH_TOKEN expires soon
+        if: steps.token_check.outputs.days_left != '999' && fromJSON(steps.token_check.outputs.days_left) < 14
+        uses: actions/github-script@v7
+        env:
+          DAYS_LEFT: ${{ steps.token_check.outputs.days_left }}
+        with:
+          script: |
+            const days = parseInt(process.env.DAYS_LEFT);
+            const expired = days < 0;
+            const title = expired
+              ? `❌ GH_TOKEN EXPIRED (${Math.abs(days)} days ago) — sync will fail`
+              : `⚠️ GH_TOKEN expires in ${days} day(s) — rotate soon`;
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'token-expiry',
+              per_page: 1,
+            });
+            if (existing.data.length > 0) {
+              console.log('Token-expiry issue already open, skipping');
+              return;
+            }
+            const body = [
+              `The \`GH_TOKEN\` secret used by the sync workflow ` +
+                (expired ? 'has EXPIRED.' : `will expire in **${days} day(s)**.`),
+              ``,
+              `**How to rotate:**`,
+              `1. Generate a new fine-grained PAT at https://github.com/settings/personal-access-tokens`,
+              `   - Repository access: Public repositories (read-only)`,
+              `   - Permissions: \`metadata: read\`, \`contents: read\``,
+              `   - Expiration: 365 days`,
+              `2. Update the secret:`,
+              `   \`\`\`bash`,
+              `   echo "ghp_xxx" | gh secret set GH_TOKEN --repo ${context.repo.owner}/${context.repo.repo}`,
+              `   \`\`\``,
+              `3. Manually re-trigger sync:`,
+              `   \`\`\`bash`,
+              `   gh workflow run sync.yml`,
+              `   \`\`\``,
+              ``,
+              `Auto-opened by the token-expiry check in [.github/workflows/sync.yml](.github/workflows/sync.yml).`,
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+              labels: ['token-expiry'],
+            });
+
       - name: Run sync
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
