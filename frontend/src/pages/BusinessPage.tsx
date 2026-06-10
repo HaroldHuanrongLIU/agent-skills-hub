@@ -207,7 +207,7 @@ export function BusinessPage() {
             {[
               {
                 q: "和直接在 GitHub 上搜 Skill 有什么区别？",
-                a: "GitHub 给你 55,000 个结果，没有质量过滤、没有合规标注、没有持续监控。Business 版相当于你的法务和安全团队有一个 7×24 的 AI 助手筛选 Skill。",
+                a: "GitHub 给你 100,000 个结果，没有质量过滤、没有合规标注、没有持续监控。Business 版相当于你的法务和安全团队有一个 7×24 的 AI 助手筛选 Skill。",
               },
               {
                 q: "私有化部署支持哪些环境？",

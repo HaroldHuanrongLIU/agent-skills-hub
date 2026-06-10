@@ -72,7 +72,7 @@ export function SubmitPage() {
             Three ways to contribute. Pick yours.
           </p>
           <div className="mt-6 flex items-center justify-center gap-3 text-xs text-gray-500 dark:text-gray-500">
-            <span>70,000+ skills indexed</span>
+            <span>100,000+ skills indexed</span>
             <span className="w-1 h-1 bg-gray-300 dark:bg-gray-700 rounded-full" />
             <span>refreshed every 8h</span>
             <span className="w-1 h-1 bg-gray-300 dark:bg-gray-700 rounded-full" />

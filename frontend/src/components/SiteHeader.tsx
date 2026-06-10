@@ -160,7 +160,7 @@ export function SiteHeader({ showTabs, tab, onTabChange, breadcrumb }: Props) {
             <Link
               to="/book/"
               className="hidden sm:inline-flex items-center px-3 py-1 text-sm text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded-lg transition-colors font-medium"
-              title="Skill 蓝皮书 2026 — 70K Skill 数据原生研究"
+              title="Skill 蓝皮书 2026 — 100K Skill 数据原生研究"
             >
               Blue Book
             </Link>

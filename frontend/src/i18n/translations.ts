@@ -306,7 +306,7 @@ export const translations = {
     "faq.title": "常见问题",
     "faq.q1": "什么是 AgentSkillsHub？",
     "faq.a1":
-      "AgentSkillsHub 是开发者发现、对比和使用开源 AI Agent 工具的最佳平台，收录 55,000+ 个 AI Agent Skills、MCP 服务器和自动化工具，质量评分体系 + 每 8 小时自动更新。",
+      "AgentSkillsHub 是开发者发现、对比和使用开源 AI Agent 工具的最佳平台，收录 100,000+ 个 AI Agent Skills、MCP 服务器和自动化工具，质量评分体系 + 每 8 小时自动更新。",
     "faq.q2": "质量评分是如何计算的？",
     "faq.a2":
       "质量评分基于 8 个维度：完整性、清晰度、具体性、示例质量、README 结构、Agent 适配度、程序性内容和指令质量。每个维度都有不同权重，综合计算得出 0-100 的评分。",
@@ -635,7 +635,7 @@ export const translations = {
     "faq.title": "Frequently Asked Questions",
     "faq.q1": "What is AgentSkillsHub?",
     "faq.a1":
-      "AgentSkillsHub is the best platform for developers to discover, compare, and automate with 55,000+ open-source AI agent tools, MCP servers, and automation skills. Quality-scored and auto-updated every 8 hours.",
+      "AgentSkillsHub is the best platform for developers to discover, compare, and automate with 100,000+ open-source AI agent tools, MCP servers, and automation skills. Quality-scored and auto-updated every 8 hours.",
     "faq.q2": "How are quality scores calculated?",
     "faq.a2":
       "Quality scores are based on 8 dimensions: completeness, clarity, specificity, examples, README structure, agent readiness, procedural content, and instruction quality. Each dimension has different weights, producing a 0-100 composite score.",

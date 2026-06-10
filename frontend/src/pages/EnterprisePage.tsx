@@ -117,7 +117,7 @@ export function EnterprisePage() {
         </title>
         <meta
           name="description"
-          content="Audit 95,000+ open-source agent skills and MCP servers before they touch production. Deploy-time security scanning, sandbox validation, and audit-ready compliance evidence — SOC 2, ISO 42001, EU AI Act. Built for VP Engineering, CTOs, and platform teams."
+          content="Audit 100,000+ open-source agent skills and MCP servers before they touch production. Deploy-time security scanning, sandbox validation, and audit-ready compliance evidence — SOC 2, ISO 42001, EU AI Act. Built for VP Engineering, CTOs, and platform teams."
         />
         <meta
           name="keywords"
@@ -178,7 +178,7 @@ export function EnterprisePage() {
                   href="/"
                   className="inline-flex items-center px-7 py-3.5 bg-white dark:bg-[var(--bg-card)] border border-gray-300 dark:border-[var(--border)] hover:border-indigo-400 text-gray-900 dark:text-white font-semibold rounded-lg transition-colors"
                 >
-                  Browse 95,000 audited skills free
+                  Browse 100,000 audited skills free
                 </a>
               </div>
               <div className="mt-6 text-xs text-gray-500 dark:text-gray-500">
@@ -234,7 +234,7 @@ export function EnterprisePage() {
                   sub: "found in the open-source MCP servers our scanner has analyzed",
                 },
                 {
-                  stat: "95,020+",
+                  stat: "100,000+",
                   label: "Skills under continuous audit",
                   sub: "re-scanned every 8 hours across the open-source ecosystem",
                 },

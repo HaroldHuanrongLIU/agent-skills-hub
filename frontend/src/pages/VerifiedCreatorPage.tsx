@@ -35,7 +35,7 @@ export function VerifiedCreatorPage() {
             为严肃做 Skill 商业化的作者而生
           </h1>
           <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            在 55,000+ 开源 Skill 的噪音里，让真正在持续迭代的作者被看见。
+            在 100,000+ 开源 Skill 的噪音里，让真正在持续迭代的作者被看见。
             不做最多，只做最可信。
           </p>
         </div>
