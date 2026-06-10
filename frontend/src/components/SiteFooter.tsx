@@ -51,7 +51,7 @@ export function SiteFooter() {
   return (
     <footer className="bg-gray-900 dark:bg-gray-950 text-gray-300 mt-12">
       {/* Main footer content */}
-      <div className="max-w-7xl mx-auto px-4 py-10">
+      <div className="max-w-[1440px] mx-auto px-4 py-10">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
           {/* Brand column */}
           <div className="col-span-2 sm:col-span-1">
@@ -245,7 +245,7 @@ export function SiteFooter() {
 
       {/* Trust links bar */}
       <div className="border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
+        <div className="max-w-[1440px] mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
           <a href="/about/" className="hover:text-white transition-colors">
             {lang === "zh" ? "关于我们" : "About"}
           </a>
@@ -283,7 +283,7 @@ export function SiteFooter() {
 
       {/* Bottom bar */}
       <div className="border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">
+        <div className="max-w-[1440px] mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">
           <span>
             &copy; {new Date().getFullYear()} AgentSkillsHub.{" "}
             {lang === "zh" ? "保留所有权利" : "All rights reserved"}.

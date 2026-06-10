@@ -93,23 +93,28 @@ export function HeroSection({ stats, onSearch }: Props) {
     stats?.categories.find((c) => c.name === "agent-tool")?.count ?? 5000;
 
   return (
-    <section className="hero-gradient -mx-4 px-4 pt-10 pb-8 sm:pt-14 sm:pb-10 mb-6 relative z-20">
+    <section className="hero-gradient full-bleed px-4 pt-16 pb-12 sm:pt-24 sm:pb-16 mb-8 relative z-20">
       <div className="max-w-3xl mx-auto text-center relative z-10">
         {/* B-path: thin enterprise banner — high signal, doesn't touch H1/SEO */}
         <a
           href="/enterprise/"
-          className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-900/60 hover:bg-indigo-100 dark:hover:bg-indigo-950/60 transition-colors"
+          className="group inline-flex items-center gap-2 px-3.5 py-1.5 mb-8 rounded-full text-xs font-medium bg-[var(--bg-card)]/70 backdrop-blur text-[var(--text-2)] border border-[var(--border)] hover:border-indigo-400/60 transition-colors"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
-          NEW · Enterprise audit packages now available
-          <span className="ml-1">→</span>
+          <span className="font-semibold text-indigo-600 dark:text-indigo-400">
+            New
+          </span>
+          Enterprise audit packages now available
+          <span className="text-[var(--text-3)] transition-transform group-hover:translate-x-0.5">
+            →
+          </span>
         </a>
 
         {/* Main headline */}
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-3">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white tracking-[-0.03em] leading-[1.05] mb-5">
           {t("hero.title").replace("{count}", countDisplay)}
         </h1>
-        <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+        <p className="text-base sm:text-lg text-[var(--text-2)] mb-9 max-w-xl mx-auto leading-relaxed">
           {t("hero.subtitle")}
         </p>
 
@@ -243,89 +248,90 @@ export function HeroSection({ stats, onSearch }: Props) {
           ))}
         </div>
 
-        {/* Key stats */}
+        {/* Key stats — one disciplined treatment, no rainbow */}
         <div className="flex items-center justify-center gap-6 sm:gap-10">
-          <div className="text-center">
-            <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {totalSkills.toLocaleString()}+
+          {[
+            { value: totalSkills.toLocaleString(), label: "Skills" },
+            { value: mcpCount.toLocaleString(), label: "MCP Servers" },
+            { value: claudeCount.toLocaleString(), label: "Claude Skills" },
+            {
+              value: agentCount.toLocaleString(),
+              label: "Agent Tools",
+              hideMobile: true,
+            },
+          ].map((s, i) => (
+            <div key={s.label} className="flex items-center gap-6 sm:gap-10">
+              {i > 0 && (
+                <div
+                  className={`w-px h-8 bg-[var(--border)] ${s.hideMobile ? "hidden sm:block" : ""}`}
+                />
+              )}
+              <div
+                className={`text-center ${s.hideMobile ? "hidden sm:block" : ""}`}
+              >
+                <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
+                  {s.value}
+                  <span className="text-[var(--text-3)]">+</span>
+                </div>
+                <div className="text-[11px] uppercase tracking-wider text-[var(--text-3)] mt-1">
+                  {s.label}
+                </div>
+              </div>
             </div>
-            <div className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-              Skills
-            </div>
-          </div>
-          <div className="w-px h-8 bg-gray-300 dark:bg-gray-700" />
-          <div className="text-center">
-            <div className="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">
-              {mcpCount.toLocaleString()}+
-            </div>
-            <div className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-              MCP Servers
-            </div>
-          </div>
-          <div className="w-px h-8 bg-gray-300 dark:bg-gray-700" />
-          <div className="text-center">
-            <div className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400">
-              {claudeCount.toLocaleString()}+
-            </div>
-            <div className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-              Claude Skills
-            </div>
-          </div>
-          <div className="w-px h-8 bg-gray-300 dark:bg-gray-700 hidden sm:block" />
-          <div className="text-center hidden sm:block">
-            <div className="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400">
-              {agentCount.toLocaleString()}+
-            </div>
-            <div className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-              Agent Tools
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* B-path Trust Signals — under the catalog stats, above the fold */}
-        <div className="mt-10 pt-8 border-t border-gray-200 dark:border-gray-800">
-          <div className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-semibold mb-4">
+        <div className="mt-12 pt-10 border-t border-[var(--border)]">
+          <div className="eyebrow mb-5">
             Trust Layer for AI Agent &amp; MCP Deployment
           </div>
-          <div className="grid grid-cols-3 gap-4 sm:gap-6 max-w-2xl mx-auto">
-            <div>
-              <div className="text-2xl sm:text-3xl font-bold text-rose-500 dark:text-rose-400">
-                43%
+          <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-xl mx-auto">
+            {[
+              {
+                value: "43%",
+                label: "of MCP servers carry critical vulnerabilities",
+              },
+              { value: "8h", label: "refresh on the entire skill catalog" },
+              {
+                value: "$10K+",
+                label: "saved per incident with pre-deploy audit",
+              },
+            ].map((s) => (
+              <div key={s.value}>
+                <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white tabular-nums">
+                  {s.value}
+                </div>
+                <div className="text-[11px] sm:text-xs text-[var(--text-3)] mt-1.5 leading-snug">
+                  {s.label}
+                </div>
               </div>
-              <div className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1 leading-tight">
-                of MCP servers have critical vulnerabilities
-              </div>
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl font-bold text-indigo-600 dark:text-indigo-400">
-                8h
-              </div>
-              <div className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1 leading-tight">
-                refresh on the entire skill catalog
-              </div>
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">
-                $10K+
-              </div>
-              <div className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1 leading-tight">
-                saved per incident with pre-deploy audit
-              </div>
-            </div>
+            ))}
           </div>
-          <div className="mt-6 flex flex-wrap justify-center gap-3 text-xs">
+          {/* Compliance-framework band — the procurement-language wedge */}
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-2">
+            <span className="text-[11px] text-[var(--text-3)]">
+              Audited against
+            </span>
+            {["SOC 2", "ISO/IEC 42001", "EU AI Act", "GDPR"].map((f) => (
+              <span
+                key={f}
+                className="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-[var(--bg-elev)] text-[var(--text-2)] border border-[var(--border)]"
+              >
+                {f}
+              </span>
+            ))}
+          </div>
+          <div className="mt-7 flex flex-wrap justify-center items-center gap-3 text-sm">
             <a
               href="/enterprise/"
-              className="inline-flex items-center px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full transition-colors"
+              className="inline-flex items-center px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors shadow-sm"
             >
               Enterprise audit →
             </a>
-            <span className="text-gray-400 dark:text-gray-500 self-center">
-              or
-            </span>
             <a
               href="#trending"
-              className="inline-flex items-center px-4 py-1.5 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-700 rounded-full transition-colors"
+              className="inline-flex items-center px-5 py-2.5 text-[var(--text-2)] hover:text-[var(--text-1)] font-medium border border-[var(--border)] hover:border-[var(--border-strong)] rounded-lg transition-colors"
             >
               Browse free catalog
             </a>

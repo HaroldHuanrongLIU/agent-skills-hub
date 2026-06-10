@@ -23,13 +23,13 @@ export function EcosystemNav({ onSelectCategory, onSelectLayer }: Props) {
   }
 
   return (
-    <section className="mb-8 mt-2">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <section className="mb-12 mt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {ECOSYSTEM_LAYERS.map((layer) => (
           <div
             key={layer.id}
             onClick={() => onSelectLayer(layer.id)}
-            className={`relative rounded-xl border bg-white dark:bg-gray-800/80 p-4 cursor-pointer transition-all duration-200 ${layer.hoverClass} border-gray-200 dark:border-gray-700 hover:shadow-md group`}
+            className="surface surface-hover p-5 cursor-pointer group"
           >
             {/* Header */}
             <div className="flex items-center gap-2 mb-2">
@@ -50,7 +50,9 @@ export function EcosystemNav({ onSelectCategory, onSelectLayer }: Props) {
             {/* Sub-chips */}
             <div className="flex flex-wrap gap-1.5">
               {layer.categories.map((cat) => {
-                const count = stats?.categories.find((c) => c.name === cat)?.count;
+                const count = stats?.categories.find(
+                  (c) => c.name === cat,
+                )?.count;
                 return (
                   <button
                     key={cat}

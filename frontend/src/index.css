@@ -70,10 +70,118 @@
 body {
   margin: 0;
   font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    "Inter Variable",
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-feature-settings:
+    "cv02", "cv03", "cv04", "cv11"; /* Inter stylistic set — humanist digits + a/g */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   background-color: var(--bg-base);
   color: var(--text-1);
   min-height: 100vh;
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   Premium system primitives (2026-06 visual refresh)
+   Restraint + hierarchy + rhythm. Applied globally so every section
+   inherits the lift, not just the hero.
+   ────────────────────────────────────────────────────────────────── */
+
+/* Tighter, more confident headings everywhere */
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
+}
+
+/* Branded selection */
+::selection {
+  background: rgba(91, 95, 233, 0.22);
+  color: inherit;
+}
+
+/* Refined scrollbar (dark-first) — a small detail that reads "designed" */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+  border: 3px solid var(--bg-base);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--text-3);
+}
+
+/* Reusable surface card — consistent radius, hairline border, calm
+   elevation, subtle hover. Use `.surface` (+ `.surface-hover` for
+   interactive cards) instead of ad-hoc bg/border combos. */
+.surface {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+.surface-hover {
+  transition:
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+.surface-hover:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 8px 24px -12px rgba(0, 0, 0, 0.18);
+}
+.dark .surface-hover:hover {
+  border-color: rgba(126, 128, 245, 0.4);
+  box-shadow:
+    0 0 0 1px rgba(126, 128, 245, 0.06),
+    0 12px 32px -16px rgba(0, 0, 0, 0.6);
+}
+
+/* Eyebrow label — small uppercase section kicker */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* Section vertical rhythm — generous, consistent */
+.section-rhythm > * + * {
+  margin-top: 5rem;
+}
+
+/* Full-bleed — break an element out of its max-width container so its
+   background spans the entire viewport while inner content stays centered.
+   Used by the hero so it never looks "boxed" on wide screens. */
+.full-bleed {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+/* clip (not hidden) avoids the horizontal scrollbar that 100vw can introduce,
+   without breaking sticky positioning. */
+html,
+body {
+  overflow-x: clip;
 }
 
 /* Slide-in panel animation */

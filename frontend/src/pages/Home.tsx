@@ -57,7 +57,7 @@ import { useLandingData } from "../hooks/useLandingData";
 import type { PaginatedSkills, Skill } from "../types/skill";
 
 export function Home() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const navigate = useNavigate();
   const { params, tab, setTab, updateParams, setPage } = useUrlParams();
   const { stats, categories } = useStats();
@@ -179,7 +179,7 @@ export function Home() {
 
       <SiteHeader showTabs tab={tab} onTabChange={setTab} />
 
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="max-w-[1440px] mx-auto px-4 py-6">
         {/* Overview Tab */}
         {tab === "overview" && (
           <div className="animate-fade-in-up">
@@ -307,7 +307,7 @@ export function Home() {
                   bypassing React Router (which would 404 → redirect to /). */}
               <a
                 href="/blog/skill-stack-solo-saas-2026/"
-                className="block mt-10 mb-4 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30 border border-indigo-200 dark:border-indigo-900 rounded-xl p-5 sm:p-6 hover:border-indigo-400 hover:shadow-md hover:-translate-y-0.5 transition-all"
+                className="surface surface-hover block mt-12 mb-4 p-5 sm:p-6"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex-none w-12 h-12 bg-indigo-100 dark:bg-indigo-900/50 rounded-lg flex items-center justify-center">
@@ -351,7 +351,7 @@ export function Home() {
             <div id="submit-skill">
               <Link
                 to="/submit/"
-                className="block mt-10 mb-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-5 sm:p-6 hover:border-indigo-500 hover:shadow-md hover:-translate-y-0.5 transition-all"
+                className="surface surface-hover block mt-4 mb-4 p-5 sm:p-6"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex-none w-12 h-12 bg-indigo-50 dark:bg-indigo-950/40 rounded-lg flex items-center justify-center">
@@ -577,52 +577,55 @@ export function Home() {
             </div>
           </>
         )}
-        {/* Commercialization CTA banner — visible just above the footer */}
-        <section className="mt-10 mb-6">
+        {/* Commercialization CTA banner — visible just above the footer.
+            Bilingual + restrained surface system (no rainbow gradients). */}
+        <section className="mt-16 mb-8">
           <div className="grid md:grid-cols-2 gap-4">
             <a
               href="/verified-creator/"
-              className="group bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-950/30 dark:to-gray-900 border border-emerald-200 dark:border-emerald-900 rounded-xl p-5 hover:shadow-md transition-all"
+              className="surface surface-hover group p-5 flex items-start gap-3.5"
             >
-              <div className="flex items-start gap-3">
-                <div className="flex-none w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4zm-1.4 14.6L6 12l1.4-1.4 3.2 3.2 6.2-6.2L18.2 9l-7.6 7.6z" />
-                  </svg>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition">
-                    Skill 作者？加入 Verified Creator →
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                    认证徽章 + Trending 加权 + 作者数据面板 +
-                    咨询撮合。首批邀请制 ¥699/年。
-                  </p>
-                </div>
+              <div className="flex-none w-10 h-10 rounded-lg bg-[var(--accent-soft)] text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4zm-1.4 14.6L6 12l1.4-1.4 3.2 3.2 6.2-6.2L18.2 9l-7.6 7.6z" />
+                </svg>
+              </div>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">
+                  {lang === "zh"
+                    ? "Skill 作者？加入 Verified Creator →"
+                    : "Skill creator? Join Verified Creator →"}
+                </h3>
+                <p className="text-sm text-[var(--text-2)] leading-relaxed">
+                  {lang === "zh"
+                    ? "认证徽章 + Trending 加权 + 作者数据面板 + 咨询撮合。"
+                    : "Verified badge, trending boost, an author dashboard, and an audited methodology behind your work."}
+                </p>
               </div>
             </a>
             <a
-              href="/business/"
-              className="group bg-gradient-to-br from-blue-50 to-white dark:from-blue-950/30 dark:to-gray-900 border border-blue-200 dark:border-blue-900 rounded-xl p-5 hover:shadow-md transition-all"
+              href="/enterprise/"
+              className="surface surface-hover group p-5 flex items-start gap-3.5"
             >
-              <div className="flex items-start gap-3">
-                <div className="flex-none w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg">
-                  🏢
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">
-                    企业用户？看看 For Business →
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                    安全审计 + SBOM + 合规标签 + 私有镜像。给法务和技术决策者的
-                    Skill 目录。
-                  </p>
-                </div>
+              <div className="flex-none w-10 h-10 rounded-lg bg-[var(--accent-soft)] text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg">
+                🏢
+              </div>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">
+                  {lang === "zh"
+                    ? "企业用户？看看 Enterprise →"
+                    : "Shipping agents to production? See Enterprise →"}
+                </h3>
+                <p className="text-sm text-[var(--text-2)] leading-relaxed">
+                  {lang === "zh"
+                    ? "部署前安全审计 + 沙箱验证 + 合规证据包（SOC 2 / ISO 42001 / EU AI Act）。"
+                    : "Deploy-time security audits, sandbox validation, and compliance evidence (SOC 2 / ISO 42001 / EU AI Act)."}
+                </p>
               </div>
             </a>
           </div>
