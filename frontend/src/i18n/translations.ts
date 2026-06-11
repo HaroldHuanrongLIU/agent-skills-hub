@@ -1,7 +1,8 @@
 export const translations = {
   zh: {
     // Header
-    "header.subtitle": "发现和比较开源 Agent Skills、工具和 MCP 服务",
+    "header.subtitle":
+      "Claude Skills · MCP 服务器 · Agent 工具 — 发现、对比、上手",
     "header.lastUpdated": "最后更新:",
     "header.wechat": "微信联系",
     "header.wechatScan": "微信扫码添加好友",
@@ -326,7 +327,7 @@ export const translations = {
   },
   en: {
     "header.subtitle":
-      "Discover and compare open-source Agent skills, tools & MCP servers",
+      "Claude Skills · MCP Servers · Agent Tools — discover, compare, deploy",
     "header.lastUpdated": "Last updated:",
     "header.wechat": "WeChat",
     "header.wechatScan": "Scan to add on WeChat",

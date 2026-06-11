@@ -49,17 +49,17 @@ export function VerifiedCreatorPage() {
               {
                 icon: "✓",
                 title: "认证徽章",
-                body: "每个 Skill 详情页、Trending 榜、分类页都带绿色 ✓ 标识，区别于普通开源作者。",
+                body: "Skill 详情页与列表卡片带绿色 ✓ 标识，区别于普通开源作者——审计过、可信。",
+              },
+              {
+                icon: "🏛",
+                title: "认证展示位",
+                body: "机构进入首页「Verified Organizations」专属展示区。排名与 Trending 始终客观、纯数据驱动，不接受任何付费加权——这正是这里的展示有价值的原因。",
               },
               {
                 icon: "🚀",
-                title: "Trending 轻微加权",
-                body: "在 Star Velocity 算法里获得可解释的小幅加权，让真实在迭代的作者更容易上榜。",
-              },
-              {
-                icon: "📊",
-                title: "作者数据面板",
-                body: "访问量、来源、点击 GitHub/站外、搜索关键词——独家给到的用户行为数据。",
+                title: "优先收录 + 加急审计",
+                body: "你的新 Skill 优先进库、优先安全与质量审计，第一时间被发现。",
               },
               {
                 icon: "💬",

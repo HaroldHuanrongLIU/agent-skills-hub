@@ -10,6 +10,9 @@ import { QualityBadge, ScoreBadge } from "./ScoreBadge";
 import { OfficialBadge } from "./OfficialBadge";
 import { SecurityBadge } from "./SecurityBadge";
 import { SizeBadge } from "./SizeBadge";
+import { VerifiedBadge } from "./VerifiedBadge";
+import { isVerifiedCreator } from "../data/verifiedCreators";
+import { isVerifiedOrgAuthor } from "../data/verifiedOrgs";
 
 interface Props {
   skill: Skill;
@@ -66,6 +69,10 @@ export const SkillCard = memo(function SkillCard({
             >
               {skill.author_name}
             </Link>
+            {(isVerifiedCreator(skill.author_name) ||
+              isVerifiedOrgAuthor(skill.author_name)) && (
+              <VerifiedBadge size="sm" />
+            )}
             {/* Badges: Quality + HOT + NEW */}
             <span className="ml-auto flex items-center gap-1 shrink-0">
               <OfficialBadge isOfficial={skill.is_official} />

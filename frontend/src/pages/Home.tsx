@@ -29,6 +29,7 @@ import { SkillWorkflows } from "../components/SkillWorkflows";
 import { PlatformRecommendations } from "../components/PlatformRecommendations";
 import { SortControls } from "../components/SortControls";
 import { SkillsMasters } from "../components/SkillsMasters";
+import { VerifiedOrganizations } from "../components/VerifiedOrganizations";
 import { fetchMasters, fetchOrgBuilders } from "../api/client";
 import type { Master, OrgBuilder } from "../api/client";
 import { TopRatedSection } from "../components/TopRatedSection";
@@ -253,6 +254,9 @@ export function Home() {
             </div>
             <div id="masters" className="scroll-mt-44">
               <LazySection>
+                {/* Verified Organizations (certified/paid) sit ABOVE the
+                    data-driven Organization Builders — clearly distinct. */}
+                <VerifiedOrganizations />
                 <SkillsMasters
                   prefetchedMasters={prefetchedMasters}
                   prefetchedOrgs={prefetchedOrgs}
