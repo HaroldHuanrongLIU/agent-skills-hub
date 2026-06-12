@@ -18,6 +18,14 @@ class TokenEstimator:
     README_TOKENS_PER_CHAR = 0.25
     CODE_RATIO = 0.6
 
+    # estimated_tokens models the *context cost of adopting the skill* — what an
+    # agent actually loads: the SKILL.md / README plus, at most, a few relevant
+    # code files. It is NOT the token count of the entire repository. Without
+    # these caps a 100K-star monorepo (e.g. openclaw, ~690MB) reported ~103M
+    # "context tokens", which is meaningless: you load the skill, not the repo.
+    CODE_KB_CAP = 200            # count at most ~200KB of code toward context
+    CONTEXT_WINDOW = 200_000     # nothing can cost more than Claude's window
+
     # Language-specific token density coefficients
     LANG_COEFF = {
         "Python": 0.8, "TypeScript": 1.0, "JavaScript": 1.0,
@@ -51,7 +59,9 @@ class TokenEstimator:
         return len(skills)
 
     def _estimate(self, skill: Skill) -> int:
-        repo_kb = skill.repo_size_kb or 0
+        # Cap repo size first: only a skill's own files plausibly enter context,
+        # not an entire monorepo. This is what kills the runaway estimates.
+        repo_kb = min(skill.repo_size_kb or 0, self.CODE_KB_CAP)
         readme_chars = skill.readme_size or 0
         language = skill.language or ""
 
@@ -62,5 +72,5 @@ class TokenEstimator:
         code_tokens = int(repo_kb * self.CODE_TOKENS_PER_KB * lang_coeff * effective_ratio)
         readme_tokens = int(readme_chars * self.README_TOKENS_PER_CHAR)
 
-        # Cap to PostgreSQL INTEGER max to avoid NumericValueOutOfRange
-        return min(code_tokens + readme_tokens, 2_147_483_647)
+        # README/SKILL.md is the real driver; final value can't exceed the window.
+        return min(code_tokens + readme_tokens, self.CONTEXT_WINDOW)
