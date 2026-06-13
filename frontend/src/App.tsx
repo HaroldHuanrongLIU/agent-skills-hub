@@ -26,11 +26,6 @@ const VerifyEmailPage = lazy(() =>
     default: m.VerifyEmailPage,
   })),
 );
-const VerifiedCreatorPage = lazy(() =>
-  import("./pages/VerifiedCreatorPage").then((m) => ({
-    default: m.VerifiedCreatorPage,
-  })),
-);
 const VerifiedCreatorApplicationPage = lazy(() =>
   import("./pages/VerifiedCreatorApplicationPage").then((m) => ({
     default: m.VerifiedCreatorApplicationPage,
@@ -38,11 +33,6 @@ const VerifiedCreatorApplicationPage = lazy(() =>
 );
 const SubmitPage = lazy(() =>
   import("./pages/SubmitPage").then((m) => ({ default: m.SubmitPage })),
-);
-const BusinessPage = lazy(() =>
-  import("./pages/BusinessPage").then((m) => ({
-    default: m.BusinessPage,
-  })),
 );
 const AuthorPage = lazy(() =>
   import("./pages/AuthorPage").then((m) => ({ default: m.AuthorPage })),
@@ -94,11 +84,11 @@ function App() {
                   <Route path="/verify-email" element={<VerifyEmailPage />} />
                   <Route
                     path="/verified-creator"
-                    element={<VerifiedCreatorPage />}
+                    element={<Navigate to="/enterprise/" replace />}
                   />
                   <Route
                     path="/verified-creator/"
-                    element={<VerifiedCreatorPage />}
+                    element={<Navigate to="/enterprise/" replace />}
                   />
                   <Route
                     path="/verified-creator/apply"
@@ -110,8 +100,14 @@ function App() {
                   />
                   <Route path="/submit" element={<SubmitPage />} />
                   <Route path="/submit/" element={<SubmitPage />} />
-                  <Route path="/business" element={<BusinessPage />} />
-                  <Route path="/business/" element={<BusinessPage />} />
+                  <Route
+                    path="/business"
+                    element={<Navigate to="/enterprise/" replace />}
+                  />
+                  <Route
+                    path="/business/"
+                    element={<Navigate to="/enterprise/" replace />}
+                  />
                   <Route path="/author/:username" element={<AuthorPage />} />
                   <Route path="/author/:username/" element={<AuthorPage />} />
                   <Route path="/book" element={<BookIndexPage />} />

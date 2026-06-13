@@ -14,44 +14,52 @@ import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 
 const DIST = "dist";
-const STATIC_ROUTES = [
-  {
-    path: "verified-creator",
-    title:
-      "Verified Creator Program — AgentSkillsHub",
-    description:
-      "AgentSkillsHub Verified Creator program. For serious Skill authors who commercialize via consulting, subscriptions, or community. Authenticated badge, trending boost, creator analytics, leads channel.",
-  },
-  {
-    path: "business",
-    title: "For Business — AgentSkillsHub Enterprise Skill Directory",
-    description:
-      "Enterprise-grade AI Agent Skill directory with security audits, SBOM export, license compliance, and on-prem mirroring. Trusted source for Fortune 500 legal + security teams.",
-  },
+
+// /enterprise/ is the canonical B2B page — emit a real 200 SPA shell with its
+// own title/description/canonical, instead of relying on the 404.html fallback.
+const indexHtml = readFileSync(join(DIST, "index.html"), "utf-8");
+const entHtml = indexHtml
+  .replace(
+    /<title>[^<]+<\/title>/,
+    "<title>Enterprise · The Trust Layer for AI Agent & MCP Deployment | Agent Skills Hub</title>",
+  )
+  .replace(
+    /<meta name="description" content="[^"]+"/,
+    '<meta name="description" content="Audit 100,000+ open-source agent skills and MCP servers before production — deploy-time scanning, sandbox validation, license/SBOM compliance, on-prem mirroring, and SOC 2 / ISO 42001 / EU AI Act evidence."',
+  )
+  .replace(
+    /<link rel="canonical" href="[^"]+"/,
+    '<link rel="canonical" href="https://agentskillshub.top/enterprise/"',
+  );
+mkdirSync(join(DIST, "enterprise"), { recursive: true });
+writeFileSync(join(DIST, "enterprise", "index.html"), entHtml);
+console.log("  ✓ /enterprise/index.html (SPA shell)");
+
+// /business/ and /verified-creator/ were consolidated into /enterprise/.
+// Emit static redirect stubs so crawlers pass authority to /enterprise/ and
+// any direct hit bounces immediately (canonical + meta-refresh + JS replace).
+const REDIRECTS = [
+  { path: "business", to: "/enterprise/" },
+  { path: "verified-creator", to: "/enterprise/" },
 ];
 
-const indexHtml = readFileSync(join(DIST, "index.html"), "utf-8");
-
-for (const route of STATIC_ROUTES) {
-  // Customize title + description per route for better SEO
-  let html = indexHtml
-    .replace(
-      /<title>[^<]+<\/title>/,
-      `<title>${route.title}</title>`,
-    )
-    .replace(
-      /<meta name="description" content="[^"]+"/,
-      `<meta name="description" content="${route.description}"`,
-    )
-    .replace(
-      /<link rel="canonical" href="[^"]+"/,
-      `<link rel="canonical" href="https://agentskillshub.top/${route.path}/"`,
-    );
-
-  const outDir = join(DIST, route.path);
+for (const r of REDIRECTS) {
+  const html = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Redirecting… — AgentSkillsHub</title>
+<link rel="canonical" href="https://agentskillshub.top${r.to}" />
+<meta http-equiv="refresh" content="0; url=${r.to}" />
+<meta name="robots" content="noindex,follow" />
+<script>location.replace(${JSON.stringify(r.to)});</script>
+</head>
+<body>Redirecting to <a href="${r.to}">${r.to}</a>…</body>
+</html>`;
+  const outDir = join(DIST, r.path);
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, "index.html"), html);
-  console.log(`  ✓ /${route.path}/index.html`);
+  console.log(`  ✓ /${r.path}/ → ${r.to} (redirect stub)`);
 }
 
 // ── Special standalone /about/ page — E-E-A-T focused ─────────────
@@ -241,4 +249,6 @@ mkdirSync(aboutDir, { recursive: true });
 writeFileSync(join(aboutDir, "index.html"), aboutHtml);
 console.log(`  ✓ /about/index.html (standalone E-E-A-T page)`);
 
-console.log(`Static routes: ${STATIC_ROUTES.length + 1} HTML files generated`);
+console.log(
+  `Static pages: ${REDIRECTS.length} redirect stubs + /about/ generated`,
+);

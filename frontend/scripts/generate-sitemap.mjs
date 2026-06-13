@@ -159,15 +159,15 @@ async function main() {
     <lastmod>${today}</lastmod>
   </url>`,
     `  <url>
-    <loc>${SITE}/verified-creator/</loc>
+    <loc>${SITE}/enterprise/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
     <lastmod>${today}</lastmod>
   </url>`,
     `  <url>
-    <loc>${SITE}/business/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>${SITE}/verified-creator/apply/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
     <lastmod>${today}</lastmod>
   </url>`,
     `  <url>

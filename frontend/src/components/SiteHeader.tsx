@@ -136,7 +136,7 @@ export function SiteHeader({ showTabs, tab, onTabChange, breadcrumb }: Props) {
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* Commercialization nav links — desktop only */}
             <Link
-              to="/verified-creator/"
+              to="/verified-creator/apply/"
               className="hidden md:inline-flex items-center gap-1 px-2.5 py-1 text-sm text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 rounded-lg transition-colors font-medium"
               title="Verified Creator Program"
             >

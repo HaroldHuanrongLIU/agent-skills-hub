@@ -251,14 +251,14 @@ export function SiteFooter() {
           </a>
           <span className="text-gray-700">·</span>
           <a
-            href="/verified-creator/"
+            href="/verified-creator/apply/"
             className="hover:text-emerald-400 transition-colors"
           >
             {lang === "zh" ? "Verified Creator" : "Verified Creator"}
           </a>
           <span className="text-gray-700">·</span>
           <a
-            href="/business/"
+            href="/enterprise/"
             className="hover:text-blue-400 transition-colors"
           >
             {lang === "zh" ? "企业版" : "For Business"}
