@@ -7,6 +7,7 @@ import { SkeletonCards } from "../components/SkeletonCards";
 import { Pagination } from "../components/Pagination";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
+import { isVerifiedOrgAuthor } from "../data/verifiedOrgs";
 import type { PaginatedSkills, Skill } from "../types/skill";
 
 const PAGE_SIZE = 30;
@@ -17,6 +18,7 @@ export function AuthorPage() {
   const [data, setData] = useState<PaginatedSkills | null>(null);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [copied, setCopied] = useState(false);
 
   const load = useCallback(() => {
     if (!username) return;
@@ -45,28 +47,41 @@ export function AuthorPage() {
     [navigate],
   );
 
-  // Derive author profile data from the first skill (all skills share the same author).
+  // Derive author profile + trust stats from the loaded skills (the Trust Layer
+  // signals — quality score + security grade — are what set a collection page
+  // here apart from a generic marketplace listing).
   const profile = useMemo(() => {
-    const first = data?.items?.[0];
+    const items = data?.items ?? [];
+    const first = items[0];
     if (!first) return null;
-    const totalStars = (data?.items ?? []).reduce(
-      (sum, s) => sum + (s.stars || 0),
-      0,
-    );
-    const avgScore =
-      (data?.items ?? []).reduce((sum, s) => sum + (s.score || 0), 0) /
-      Math.max(1, data?.items?.length ?? 0);
+    const totalStars = items.reduce((sum, s) => sum + (s.stars || 0), 0);
+    const scored = items.filter((s) => typeof s.quality_score === "number");
+    const avgQuality = scored.length
+      ? Math.round(
+          scored.reduce((sum, s) => sum + (s.quality_score || 0), 0) /
+            scored.length,
+        )
+      : 0;
+    const safeCount = items.filter((s) => s.security_grade === "safe").length;
+    const topRepos = items.slice(0, 5).map((s) => s.repo_full_name);
+    const topCategory = first.category;
     return {
       name: first.author_name,
       avatar: first.author_avatar_url,
-      followers: first.author_followers,
       totalStars,
-      avgScore,
+      avgQuality,
+      safeCount,
+      topRepos,
+      topCategory,
     };
   }, [data]);
 
   const displayName = profile?.name || username || "Author";
   const total = data?.total ?? 0;
+  const verified = isVerifiedOrgAuthor(displayName);
+  const installCmd = profile?.topRepos.length
+    ? `npx @agentskillshub/cli install ${profile.topRepos.slice(0, 3).join(" ")}`
+    : "";
   const title = `${displayName} — ${total || ""} Claude Skills & Agent Tools · AgentSkillsHub`;
   const description = `Browse all ${total} open-source AI agent skills, MCP servers, and Claude skills by ${displayName}. Ranked by stars and quality score.`;
 
@@ -106,7 +121,7 @@ export function AuthorPage() {
         </nav>
 
         {/* Author header */}
-        <div className="flex items-center gap-5 mb-8">
+        <div className="flex items-start gap-5 mb-6">
           {profile?.avatar ? (
             <img
               src={profile.avatar}
@@ -119,12 +134,29 @@ export function AuthorPage() {
             <div className="w-18 h-18 rounded-full bg-gray-200 dark:bg-gray-700 shrink-0" />
           )}
           <div className="min-w-0">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white truncate">
-              {displayName}
+            <h1 className="flex items-center gap-2 text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+              <span className="truncate">{displayName}</span>
+              {verified && (
+                <span
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 shrink-0"
+                  title="Verified creator/organization"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4zm-1.4 14.6L6 12l1.4-1.4 3.2 3.2 6.2-6.2L18.2 9l-7.6 7.6z" />
+                  </svg>
+                  Verified
+                </span>
+              )}
             </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            {/* SEO-friendly unique intro */}
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1.5 leading-relaxed max-w-2xl">
               {total > 0
-                ? `${total} open-source skills · ${profile?.totalStars.toLocaleString() || 0}+ stars across visible repos`
+                ? `${displayName} 是 ${total} 个开源 AI agent skill / MCP server 的作者${profile?.topCategory ? `,主攻 ${profile.topCategory}` : ""},在 AgentSkillsHub 经质量评分与安全审计收录。`
                 : loading
                   ? "Loading author profile..."
                   : "No skills found for this author yet."}
@@ -147,6 +179,59 @@ export function AuthorPage() {
             </a>
           </div>
         </div>
+
+        {/* Trust stats bar — our differentiator (LobeHub shows installs, not trust) */}
+        {total > 0 && (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+            {[
+              { v: total.toLocaleString(), l: "Skills" },
+              {
+                v: `${(profile?.totalStars || 0).toLocaleString()}+`,
+                l: "Stars (top repos)",
+              },
+              { v: `${profile?.avgQuality || 0}/100`, l: "Avg quality" },
+              { v: `${profile?.safeCount || 0}`, l: "🟢 Audited safe" },
+            ].map((s) => (
+              <div
+                key={s.l}
+                className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 py-3 text-center"
+              >
+                <div className="text-lg font-bold text-gray-900 dark:text-white tabular-nums">
+                  {s.v}
+                </div>
+                <div className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">
+                  {s.l}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Install-all (agent-first) — feed the prompt to your agent */}
+        {installCmd && (
+          <div className="rounded-xl overflow-hidden border border-gray-800 bg-[#0d1117] shadow-sm mb-8">
+            <div className="flex items-center justify-between px-4 py-2 border-b border-gray-800">
+              <span className="text-[11px] text-gray-400 font-medium">
+                一键装 {displayName} 的精选 skill(喂给你的 agent)
+              </span>
+              <button
+                onClick={() => {
+                  navigator.clipboard?.writeText(installCmd).then(() => {
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 1600);
+                  });
+                }}
+                className="text-xs px-2.5 py-1 rounded-md text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors cursor-pointer"
+              >
+                {copied ? "✓ Copied" : "Copy"}
+              </button>
+            </div>
+            <code className="block px-4 py-3 font-mono text-sm text-gray-100 overflow-x-auto whitespace-nowrap">
+              <span className="text-emerald-400 select-none">$ </span>
+              {installCmd}
+            </code>
+          </div>
+        )}
 
         {/* Skills grid */}
         {loading ? (

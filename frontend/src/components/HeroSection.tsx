@@ -19,7 +19,8 @@ interface Props {
 }
 
 export function HeroSection({ stats, onSearch }: Props) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
+  const isZh = lang === "zh";
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Skill[]>([]);
@@ -284,18 +285,29 @@ export function HeroSection({ stats, onSearch }: Props) {
         {/* B-path Trust Signals — under the catalog stats, above the fold */}
         <div className="mt-12 pt-10 border-t border-[var(--border)]">
           <div className="eyebrow mb-5">
-            Trust Layer for AI Agent &amp; MCP Deployment
+            {isZh
+              ? "AI Agent 与 MCP 部署的信任层"
+              : "Trust Layer for AI Agent & MCP Deployment"}
           </div>
           <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-xl mx-auto">
             {[
               {
                 value: "26.1%",
-                label: "of agent skills contain security vulnerabilities",
+                label: isZh
+                  ? "的 agent skill 含安全漏洞"
+                  : "of agent skills contain security vulnerabilities",
               },
-              { value: "8h", label: "refresh on the entire skill catalog" },
+              {
+                value: "8h",
+                label: isZh
+                  ? "全量 skill 目录刷新一次"
+                  : "refresh on the entire skill catalog",
+              },
               {
                 value: "$10K+",
-                label: "saved per incident with pre-deploy audit",
+                label: isZh
+                  ? "部署前审计每次事故省下"
+                  : "saved per incident with pre-deploy audit",
               },
             ].map((s) => (
               <div key={s.value}>
@@ -310,7 +322,7 @@ export function HeroSection({ stats, onSearch }: Props) {
           </div>
           {/* Source attribution — honesty: the vuln stat is citable research */}
           <div className="mt-3 text-[10px] text-[var(--text-3)]">
-            Vulnerability rate from{" "}
+            {isZh ? "漏洞率来自 " : "Vulnerability rate from "}
             <a
               href="https://arxiv.org/abs/2601.10338"
               target="_blank"
@@ -324,7 +336,7 @@ export function HeroSection({ stats, onSearch }: Props) {
           {/* Compliance-framework band — the procurement-language wedge */}
           <div className="mt-7 flex flex-wrap items-center justify-center gap-2">
             <span className="text-[11px] text-[var(--text-3)]">
-              Audited against
+              {isZh ? "对齐合规框架" : "Audited against"}
             </span>
             {["SOC 2", "ISO/IEC 42001", "EU AI Act", "GDPR"].map((f) => (
               <span
@@ -340,13 +352,13 @@ export function HeroSection({ stats, onSearch }: Props) {
               href="/enterprise/"
               className="inline-flex items-center px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors shadow-sm"
             >
-              Enterprise audit →
+              {isZh ? "企业审计 →" : "Enterprise audit →"}
             </a>
             <a
               href="#trending"
               className="inline-flex items-center px-5 py-2.5 text-[var(--text-2)] hover:text-[var(--text-1)] font-medium border border-[var(--border)] hover:border-[var(--border-strong)] rounded-lg transition-colors"
             >
-              Browse free catalog
+              {isZh ? "浏览免费目录" : "Browse free catalog"}
             </a>
           </div>
         </div>

@@ -16,9 +16,14 @@ import { join } from "path";
 import { SUPABASE_URL, SUPABASE_ANON_KEY, SITE, esc, starsK } from "./shared-utils.mjs";
 
 const DIST = "dist";
-const AUTHOR_LIMIT = 500;              // top N authors to pre-render
-const MIN_SKILLS = 2;                  // must have at least this many skills
-const MIN_TOTAL_STARS = 100;           // OR this many cumulative stars
+// Tightened to stop thin author pages from diluting crawl budget. GSC showed
+// ~500 author pages "discovered – currently not indexed": Google reads a flood
+// of thin aggregation pages as a low-value site. Concentrate on substantive
+// authors so the submitted set is smaller but worth indexing.
+const AUTHOR_LIMIT = 300;              // hard cap on pre-rendered authors
+const MIN_SKILLS = 3;                  // multi-skill authors need ≥3 skills…
+const MIN_TOTAL_STARS = 300;           // …AND ≥300 cumulative stars
+const SOLO_STAR_FLOOR = 1000;          // OR a single famous author (≥1000 stars)
 
 /** Fetch skills with author data (minimum fields, all rows). */
 async function fetchAuthorSkills() {
@@ -28,6 +33,7 @@ async function fetchAuthorSkills() {
   const fields = [
     "repo_full_name", "repo_name", "author_name", "author_avatar_url",
     "stars", "description", "category", "score",
+    "quality_score", "security_grade",
   ].join(",");
 
   while (true) {
@@ -75,30 +81,40 @@ function groupByAuthor(skills) {
       ? scored.reduce((sum, s) => sum + s.score, 0) / scored.length
       : 0;
     const passesThreshold =
-      g.skills.length >= MIN_SKILLS || g.total_stars >= MIN_TOTAL_STARS;
+      (g.skills.length >= MIN_SKILLS && g.total_stars >= MIN_TOTAL_STARS) ||
+      g.total_stars >= SOLO_STAR_FLOOR;
     if (passesThreshold) qualified.push(g);
   }
   qualified.sort((a, b) => b.total_stars - a.total_stars);
   return qualified.slice(0, AUTHOR_LIMIT);
 }
 
-/** Build an SEO-optimized <noscript> summary for crawlers. */
+/** Build an SEO-optimized <noscript> summary for crawlers. Unique per author
+ *  (intro + trust summary + 8 skills) so Google has a reason to index it, not
+ *  a thin near-duplicate list. */
 function buildSeoNoScript(group) {
-  const top5 = group.skills.slice(0, 5);
-  const listItems = top5
+  const top = group.skills.slice(0, 8);
+  const listItems = top
     .map((s) => {
       const safe = esc(s.repo_full_name);
-      const desc = esc((s.description || "").slice(0, 120));
-      return `<li><a href="${SITE}/skill/${safe}/">${esc(s.repo_name)}</a> — ${desc} (${starsK(s.stars || 0)}★)</li>`;
+      const desc = esc((s.description || "").slice(0, 140));
+      const q = typeof s.quality_score === "number" ? ` · quality ${Math.round(s.quality_score)}/100` : "";
+      const grade = s.security_grade && s.security_grade !== "unknown" ? ` · security: ${esc(s.security_grade)}` : "";
+      return `<li><a href="${SITE}/skill/${safe}/">${esc(s.repo_name)}</a> — ${desc} (${starsK(s.stars || 0)}★${q}${grade})</li>`;
     })
     .join("");
+  // trust summary
+  const cats = [...new Set(group.skills.map((s) => s.category).filter(Boolean))].slice(0, 4).join(", ");
+  const safeN = group.skills.filter((s) => s.security_grade === "safe").length;
+  const scored = group.skills.filter((s) => typeof s.quality_score === "number");
+  const avgQ = scored.length ? Math.round(scored.reduce((a, s) => a + s.quality_score, 0) / scored.length) : 0;
   return `
     <noscript>
       <h1>${esc(group.author_name)} — ${group.skills.length} Open-Source AI Agent Skills</h1>
-      <p>Browse all ${group.skills.length} skills by <strong>${esc(group.author_name)}</strong> on AgentSkillsHub, with a combined ${group.total_stars.toLocaleString()}+ GitHub stars across MCP servers, Claude skills, and agent tools.</p>
+      <p><strong>${esc(group.author_name)}</strong> is the author of ${group.skills.length} open-source AI agent skills and MCP servers${cats ? ` spanning ${esc(cats)}` : ""}, with a combined ${group.total_stars.toLocaleString()}+ GitHub stars. On AgentSkillsHub each is quality-scored (avg ${avgQ}/100) and security-graded${safeN ? ` — ${safeN} verified safe` : ""}.</p>
       <h2>Top skills by ${esc(group.author_name)}</h2>
       <ul>${listItems}</ul>
-      <p><a href="https://github.com/${esc(group.author_name)}">View on GitHub</a> · <a href="${SITE}/">Explore all creators</a></p>
+      <p><a href="https://github.com/${esc(group.author_name)}">View ${esc(group.author_name)} on GitHub</a> · <a href="${SITE}/">Explore audited agent skills</a></p>
     </noscript>`;
 }
 
@@ -156,7 +172,7 @@ async function main() {
   console.log(`  Loaded ${skills.length} skills`);
 
   const groups = groupByAuthor(skills);
-  console.log(`  Qualified authors: ${groups.length} (threshold: ${MIN_SKILLS}+ skills OR ${MIN_TOTAL_STARS}+ stars)`);
+  console.log(`  Qualified authors: ${groups.length} (≥${MIN_SKILLS} skills & ≥${MIN_TOTAL_STARS}★, or ≥${SOLO_STAR_FLOOR}★ solo; cap ${AUTHOR_LIMIT})`);
 
   let generated = 0;
   for (const g of groups) {
