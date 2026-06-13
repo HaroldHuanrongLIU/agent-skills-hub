@@ -289,8 +289,8 @@ export function HeroSection({ stats, onSearch }: Props) {
           <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-xl mx-auto">
             {[
               {
-                value: "43%",
-                label: "of MCP servers carry critical vulnerabilities",
+                value: "26.1%",
+                label: "of agent skills contain security vulnerabilities",
               },
               { value: "8h", label: "refresh on the entire skill catalog" },
               {
@@ -308,6 +308,19 @@ export function HeroSection({ stats, onSearch }: Props) {
               </div>
             ))}
           </div>
+          {/* Source attribution — honesty: the vuln stat is citable research */}
+          <div className="mt-3 text-[10px] text-[var(--text-3)]">
+            Vulnerability rate from{" "}
+            <a
+              href="https://arxiv.org/abs/2601.10338"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-[var(--text-2)] transition-colors"
+            >
+              Liu et al., 2026 (n=31,132 skills)
+            </a>
+          </div>
+
           {/* Compliance-framework band — the procurement-language wedge */}
           <div className="mt-7 flex flex-wrap items-center justify-center gap-2">
             <span className="text-[11px] text-[var(--text-3)]">
