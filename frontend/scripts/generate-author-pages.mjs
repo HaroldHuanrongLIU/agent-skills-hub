@@ -20,7 +20,11 @@ const DIST = "dist";
 // ~500 author pages "discovered – currently not indexed": Google reads a flood
 // of thin aggregation pages as a low-value site. Concentrate on substantive
 // authors so the submitted set is smaller but worth indexing.
-const AUTHOR_LIMIT = 300;              // hard cap on pre-rendered authors
+// The TIGHTENED THRESHOLD below (≥3 skills & ≥300★, or ≥1000★ solo) is what
+// removes thin pages. The cap only guards against runaway — keep it generous
+// so genuinely substantive authors (e.g. 16 skills / 4474★) aren't cut just by
+// ranking past an arbitrary line.
+const AUTHOR_LIMIT = 500;              // hard cap on pre-rendered authors
 const MIN_SKILLS = 3;                  // multi-skill authors need ≥3 skills…
 const MIN_TOTAL_STARS = 300;           // …AND ≥300 cumulative stars
 const SOLO_STAR_FLOOR = 1000;          // OR a single famous author (≥1000 stars)
