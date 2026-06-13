@@ -117,7 +117,11 @@ export const MIN_STARS_FOR_PAGE = 50;
  * expected, throw → CI fails fast → no broken deploy.
  */
 const MIN_EXPECTED_SKILLS = 5000;  // tighten as Hub grows; Hub is 70K+ as of 2026-05
-const MAX_RETRIES = 3;
+// 6 retries with exponential backoff = up to ~63s of patience per page. The
+// old 3 (~7s) gave up too soon when Supabase was briefly slow (e.g. warming
+// after a restart, or autovacuum), failing the whole deploy on a transient
+// 57014. Builds should ride out a slow DB, not abort.
+const MAX_RETRIES = 6;
 
 async function fetchPageWithRetry(url, headers, attempt = 1) {
   try {
