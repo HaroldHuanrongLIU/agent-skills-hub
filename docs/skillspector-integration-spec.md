@@ -1,8 +1,23 @@
-# SkillSpector Integration — Spec v0.1
+# SkillSpector Integration — Spec v0.2
 
-> 用 NVIDIA 开源的 [SkillSpector](https://github.com/NVIDIA/SkillSpector)(Apache-2.0)当审计引擎,
-> 把目录里 **97.8% 的 `security_grade = unknown`** 真正扫成有等级、有依据、可上生产的信任数据。
-> 这是 Trust Layer 从"口号"到"能力"的落地。
+> 用 NVIDIA 开源的 [SkillSpector](https://github.com/NVIDIA/SkillSpector)(Apache-2.0)做 agent skill 的安全深扫。
+
+> ## ⛔ 实测结论(2026-06,v0.2):不做批量自动评级
+>
+> 经过把 LLM 模式真正跑通(真 OpenAI key + 注册模型 + 429 重试)后,对 **10 个高价值 skill**
+> 的试扫证明:**SkillSpector 即使配 gpt-4o(强模型)也会灾难性过度标记** ——
+> **10 个里 9 个被判 `unsafe`/`reject`**,包括 firecrawl 官方 MCP server 和两个纯 markdown 的
+> awesome 列表。误报依据已实锤:把 **二进制 PNG 字节** 判为"工具参数滥用"、把 README 里的
+> **star-history 徽章链接** 判为"数据外泄"、把文档里的 **`tools:*`** 判为"过度代理"、把 MIT license
+> 的 **"NOT LIMITED TO"** 判为"范围蔓延"。后过滤 LICENSE/测试文件也救不回来(误报在 README/markdown/
+> 二进制里)。单个耗时 49s–856s(Tier-1 限速),全量 19,600 个需数十小时 + 真金白银。
+>
+> **把这种结果写进生产 `security_grade` = 90% 目录被打上假"危险"标签,直接砸 Trust Layer 招牌。**
+> 比 `unknown` 黑箱更糟 —— `unknown`("我们没审过")是诚实的;假 `unsafe` 是主动制造错误信息。
+>
+> **决策:SkillSpector 只用于「按需深扫」**(`ash audit --deep` / 博客免费审计 / 企业线索),
+> **每次有人复核**;全库保持诚实 `unknown`。批量自动评级路线作废。
+> 试扫工具:`backend/skillspector_runner.py`(staging-only,raw vs 过滤后双视图)。
 
 ---
 
