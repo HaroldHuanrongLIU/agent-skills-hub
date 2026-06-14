@@ -32,16 +32,20 @@ const SOLO_STAR_FLOOR = 1000;          // OR a single famous author (≥1000 sta
 /** Fetch skills with author data (minimum fields, all rows). */
 async function fetchAuthorSkills() {
   const skills = [];
-  let offset = 0;
-  const limit = 1000;
+  let lastId = 0;
+  // Keyset by id, NOT deep OFFSET on stars.desc. Deep OFFSET (offset=100000)
+  // forces Postgres to sort + skip 100K rows every page → exceeds the ~8s
+  // statement_timeout the moment Supabase is slow → 57014 → failed deploy.
+  // Author grouping re-sorts anyway, so fetch order doesn't matter.
+  const limit = 300;
   const fields = [
-    "repo_full_name", "repo_name", "author_name", "author_avatar_url",
+    "id", "repo_full_name", "repo_name", "author_name", "author_avatar_url",
     "stars", "description", "category", "score",
     "quality_score", "security_grade",
   ].join(",");
 
   while (true) {
-    const url = `${SUPABASE_URL}/rest/v1/skills?select=${fields}&order=stars.desc&offset=${offset}&limit=${limit}`;
+    const url = `${SUPABASE_URL}/rest/v1/skills?select=${fields}&order=id.asc&id=gt.${lastId}&limit=${limit}`;
     const res = await fetch(url, {
       headers: {
         apikey: SUPABASE_ANON_KEY,
@@ -51,7 +55,7 @@ async function fetchAuthorSkills() {
     const data = await res.json();
     if (!Array.isArray(data) || !data.length) break;
     skills.push(...data);
-    offset += limit;
+    lastId = data[data.length - 1].id;
     if (data.length < limit) break;
   }
   return skills;

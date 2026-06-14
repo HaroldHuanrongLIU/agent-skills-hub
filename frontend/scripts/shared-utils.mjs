@@ -148,7 +148,13 @@ async function fetchPageWithRetry(url, headers, attempt = 1) {
 export async function fetchAllSkills() {
   const skills = [];
   let lastId = 0;
-  const limit = 1000;
+  // 300, not 1000: a 1000-row keyset page takes 3–8s when Supabase is slow
+  // (warming after a restart, autovacuum, load) — right at the ~8s anon
+  // statement_timeout, so pages intermittently 57014 and fail the deploy.
+  // 300 rows stays ~2s even on a degraded instance. More round-trips, but the
+  // build SURVIVES a slow DB instead of aborting. Keyset scan is O(limit) so
+  // smaller pages aren't meaningfully more total work.
+  const limit = 300;
   // NOTE: readme_content is deliberately NOT fetched here. It's a large TOASTed
   // column; pulling it for all 106K rows (especially after the README backfill
   // raised coverage to ~100%) made every keyset page exceed Supabase's
@@ -208,7 +214,7 @@ export async function fetchAllSkills() {
 export async function fetchReadmeMap(minStars) {
   const map = new Map();
   let lastId = 0;
-  const limit = 500; // readmes are large; smaller pages stay under the timeout
+  const limit = 200; // readmes are large; small pages stay well under the timeout
   while (true) {
     const url =
       `${SUPABASE_URL}/rest/v1/skills?select=id,readme_content` +

@@ -51,7 +51,7 @@ function shouldIndex(skill) {
 async function fetchAllSkills() {
   const skills = [];
   let lastId = 0;
-  const limit = 1000;
+  const limit = 300; // small pages survive a slow/warming Supabase (under statement_timeout)
 
   // Keyset pagination by primary key — deep OFFSET on the 78K-row skills table
   // forced a sort + skip on every page and exceeded Supabase's statement_timeout
