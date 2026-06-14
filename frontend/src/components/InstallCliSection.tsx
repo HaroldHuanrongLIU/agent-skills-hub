@@ -3,7 +3,8 @@ import { useI18n } from "../i18n/I18nContext";
 
 // Flip to true once @agentskillshub/cli is published on npm — this swaps the
 // displayed command to the clean scoped form and reveals the npm link.
-const NPM_PUBLISHED = false;
+// Published 2026-06-14: https://www.npmjs.com/package/@agentskillshub/cli
+const NPM_PUBLISHED = true;
 const INSTALL_CMD = NPM_PUBLISHED
   ? 'npx @agentskillshub/cli search "scrape a website" --safe'
   : 'npx github:zhuyansen/agentskillshub-cli search "scrape a website" --safe';
