@@ -37,11 +37,17 @@ export function ScoreBadge({ score, size = "md", showTier = false }: Props) {
     const w = size === "sm" ? "w-10" : size === "lg" ? "w-14" : "w-12";
     const h = size === "sm" ? "h-12" : size === "lg" ? "h-18" : "h-16";
     return (
-      <div className={`${w} ${h} ${color} border rounded-xl flex flex-col items-center justify-center shrink-0`}>
-        <span className={`${size === "sm" ? "text-sm" : size === "lg" ? "text-xl" : "text-lg"} font-bold leading-none`}>
+      <div
+        className={`${w} ${h} ${color} border rounded-xl flex flex-col items-center justify-center shrink-0`}
+      >
+        <span
+          className={`${size === "sm" ? "text-sm" : size === "lg" ? "text-xl" : "text-lg"} font-bold leading-none`}
+        >
           {score.toFixed(0)}
         </span>
-        <span className={`${size === "sm" ? "text-[9px]" : size === "lg" ? "text-xs" : "text-[10px]"} font-bold opacity-60 leading-none mt-0.5`}>
+        <span
+          className={`${size === "sm" ? "text-[9px]" : size === "lg" ? "text-xs" : "text-[10px]"} font-bold opacity-60 leading-none mt-0.5`}
+        >
           {tier}
         </span>
       </div>
@@ -58,14 +64,19 @@ export function ScoreBadge({ score, size = "md", showTier = false }: Props) {
   );
 }
 
-/** Compact quality tier badge for card/table use */
+/** Compact quality badge for card/table use. Shows the actual 0-100 quality
+ *  score (not just a tier letter) — the plan calls for a visible number, and a
+ *  precise "Q 92" reads as a stronger trust signal than "Q:A". */
 export function QualityBadge({ score }: { score: number }) {
   if (!score || score <= 0) return null;
-  const tier = getTier(score);
   const color = getScoreColor(score);
   return (
-    <span className={`px-1.5 py-0.5 text-[9px] font-bold rounded ${color}`}>
-      Q:{tier}
+    <span
+      className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] font-bold rounded ${color}`}
+      title={`Quality score: ${Math.round(score)}/100`}
+    >
+      <span className="opacity-60">Q</span>
+      {Math.round(score)}
     </span>
   );
 }
