@@ -4,8 +4,7 @@ import { BrowseMenu } from "./BrowseMenu";
 import { LanguageToggle } from "./LanguageToggle";
 import { ThemeToggle } from "./ThemeToggle";
 import { useI18n } from "../i18n/I18nContext";
-import { useStats } from "../hooks/useStats";
-import { timeAgo } from "../utils/time";
+import { HeaderMoreMenu } from "./HeaderMoreMenu";
 import { subscribe } from "../api/client";
 
 interface Props {
@@ -19,8 +18,6 @@ interface Props {
 
 export function SiteHeader({ showTabs, tab, onTabChange, breadcrumb }: Props) {
   const { t } = useI18n();
-  const { stats } = useStats();
-  const [showWechat, setShowWechat] = useState(false);
   const [showNewsletterPopup, setShowNewsletterPopup] = useState(false);
   const [nlEmail, setNlEmail] = useState("");
   const [nlStatus, setNlStatus] = useState<
@@ -137,22 +134,6 @@ export function SiteHeader({ showTabs, tab, onTabChange, breadcrumb }: Props) {
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* Browse-by-type megamenu — desktop only */}
             <BrowseMenu />
-            {/* Commercialization nav links — desktop only */}
-            <Link
-              to="/verified-creator/apply/"
-              className="hidden md:inline-flex items-center gap-1 px-2.5 py-1 text-sm text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 rounded-lg transition-colors font-medium"
-              title="Verified Creator Program"
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4zm-1.4 14.6L6 12l1.4-1.4 3.2 3.2 6.2-6.2L18.2 9l-7.6 7.6z" />
-              </svg>
-              <span>Creators</span>
-            </Link>
             <Link
               to="/enterprise/"
               className="hidden sm:inline-flex items-center px-3 py-1 text-sm text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded-lg transition-colors font-semibold ring-1 ring-inset ring-indigo-200 dark:ring-indigo-900"
@@ -175,11 +156,6 @@ export function SiteHeader({ showTabs, tab, onTabChange, breadcrumb }: Props) {
             >
               Blog
             </a>
-            <span className="text-sm text-gray-400 dark:text-gray-500 items-center gap-1.5 hidden lg:flex">
-              <span className="w-2 h-2 rounded-full bg-green-400" />
-              {t("header.lastUpdated")}{" "}
-              {stats ? timeAgo(stats.last_sync_at) : "..."}
-            </span>
             {/* Favorites */}
             <Link
               to="/favorites/"
@@ -204,93 +180,8 @@ export function SiteHeader({ showTabs, tab, onTabChange, breadcrumb }: Props) {
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
               </svg>
             </a>
-            {/* X (Twitter) link */}
-            <a
-              href="https://x.com/GoSailGlobal"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              title="X (Twitter)"
-              aria-label="Follow on X"
-            >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-            </a>
-            {/* RSS Feed */}
-            <a
-              href="/feed.xml"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-400 hover:text-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-300"
-              title="RSS Feed"
-              aria-label="RSS Feed"
-            >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795 0 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.742-7.099-15.783-15.839-15.82zm0-8.18v4.819c12.376.051 22.41 10.087 22.461 22.419h4.539c-.062-14.896-12.149-27.005-27-27.238z" />
-              </svg>
-            </a>
-            {/* WeChat contact button */}
-            <div className="relative">
-              <button
-                onClick={() => setShowWechat(!showWechat)}
-                className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-400 hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-green-300 cursor-pointer"
-                title={t("header.wechat")}
-                aria-label="WeChat"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05a6.13 6.13 0 01-.247-1.722c0-3.647 3.39-6.605 7.57-6.605.63 0 1.246.066 1.84.178C17.99 4.504 13.773 2.188 8.691 2.188zm-2.6 4.408c.56 0 1.016.455 1.016 1.016 0 .56-.456 1.016-1.017 1.016-.56 0-1.016-.456-1.016-1.016 0-.56.456-1.016 1.016-1.016zm5.44 0c.56 0 1.016.455 1.016 1.016 0 .56-.456 1.016-1.016 1.016-.56 0-1.016-.456-1.016-1.016 0-.56.456-1.016 1.016-1.016zm4.294 4.287c-3.65 0-6.614 2.528-6.614 5.646 0 3.118 2.963 5.646 6.614 5.646a7.8 7.8 0 002.222-.325.636.636 0 01.526.074l1.403.823a.24.24 0 00.122.04c.118 0 .213-.097.213-.215 0-.053-.021-.104-.035-.155l-.288-1.093a.432.432 0 01.156-.488c1.35-.995 2.21-2.466 2.21-4.107 0-3.118-2.963-5.646-6.614-5.646h.085zm-2.834 2.94c.411 0 .744.334.744.745a.745.745 0 11-.744-.745zm5.297 0c.411 0 .744.334.744.745a.745.745 0 11-.744-.745z" />
-                </svg>
-              </button>
-              {/* WeChat QR code popup */}
-              {showWechat && (
-                <>
-                  {/* Backdrop */}
-                  <div
-                    className="fixed inset-0 z-40"
-                    onClick={() => setShowWechat(false)}
-                  />
-                  {/* Popup card */}
-                  <div className="absolute right-0 top-10 z-50 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 w-64 animate-in fade-in slide-in-from-top-2">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                        {t("header.wechatScan")}
-                      </span>
-                      <button
-                        onClick={() => setShowWechat(false)}
-                        className="w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer"
-                      >
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                    <img
-                      src="/wechat-qr.jpg"
-                      alt="WeChat QR Code"
-                      className="w-full rounded-lg border border-gray-100 dark:border-gray-700"
-                    />
-                    <p className="text-xs text-gray-400 text-center mt-2">
-                      {t("header.wechatTip")}
-                    </p>
-                  </div>
-                </>
-              )}
-            </div>
+            {/* Secondary links collapsed into a "···" overflow menu */}
+            <HeaderMoreMenu />
             <ThemeToggle />
             <LanguageToggle />
             {/* Newsletter CTA button + popup */}

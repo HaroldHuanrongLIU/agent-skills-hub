@@ -43,6 +43,7 @@ import { FilterSidebar } from "../components/FilterSidebar";
 import { InstallGuide } from "../components/InstallGuide";
 import { EcosystemNav } from "../components/EcosystemNav";
 import { ScenarioTagCloud } from "../components/ScenarioTagCloud";
+import { CuratedCollections } from "../components/CuratedCollections";
 import { ProblemSection } from "../components/ProblemSection";
 import { HowItWorksSection } from "../components/HowItWorksSection";
 import { InstallCliSection } from "../components/InstallCliSection";
@@ -193,6 +194,7 @@ export function Home() {
                 setTab("explore");
               }}
             />
+            <CuratedCollections />
             <EcosystemNav
               onSelectCategory={(category) => {
                 updateParams({ category });
