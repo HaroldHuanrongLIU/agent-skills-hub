@@ -61,7 +61,7 @@ const SCENARIOS = JSON.parse(
 const SCENARIO_ZH = JSON.parse(
   readFileSync(join(__dirname, "scenario-zh.json"), "utf-8"),
 );
-const KW_MAX_SCENARIOS = 8; // cap scenarios merged per skill to bound index size
+const KW_MAX_SCENARIOS = 6; // cap scenarios merged per skill to bound index size
 
 const SCENARIO_MATCHERS = SCENARIOS.map((s) => {
   const m = s.match || {};
@@ -69,8 +69,11 @@ const SCENARIO_MATCHERS = SCENARIOS.map((s) => {
   return {
     cats: new Set(m.categories || []),
     tagMatches: (m.tag_matches || []).map((k) => k.toLowerCase()),
-    keywords: [
-      ...(m.primary_keywords || []),
+    // Primary keywords are strong intent signals (weighted high so a niche
+    // scenario a skill genuinely belongs to — paid-ads for an ad tool — isn't
+    // crowded out of the cap by broad scenarios it only weakly mentions).
+    primaryKw: (m.primary_keywords || []).map((k) => k.toLowerCase()),
+    secondaryKw: [
       ...(m.secondary_keywords || []),
       ...(m.keywords || []),
     ].map((k) => k.toLowerCase()),
@@ -84,7 +87,12 @@ const SCENARIO_MATCHERS = SCENARIOS.map((s) => {
   };
 });
 
-/** Bilingual scenario keywords for the scenarios a skill belongs to. */
+/** Bilingual scenario keywords for the scenarios a skill belongs to.
+ *  Scores each matching scenario by match strength (category + tag hits +
+ *  keyword hits) and keeps only the STRONGEST KW_MAX_SCENARIOS. Taking the
+ *  strongest (not the first-in-file-order) stops high-star generalist repos —
+ *  a "Claude Code guide" that mentions scraping once — from getting tagged with
+ *  loosely-matched scenarios that then pollute specific queries. */
 function scenarioKw(r) {
   const cat = r.category || "";
   const tags = (Array.isArray(r.tags) ? r.tags : parseJsonArray(r.tags)).map(
@@ -92,18 +100,20 @@ function scenarioKw(r) {
   );
   const text =
     `${r.repo_name || ""} ${r.description || ""} ${tags.join(" ")}`.toLowerCase();
-  const hits = [];
+  const scored = [];
   for (const sc of SCENARIO_MATCHERS) {
-    const match =
-      sc.cats.has(cat) ||
-      sc.tagMatches.some((t) => tags.includes(t)) ||
-      sc.keywords.some((k) => text.includes(k));
-    if (match) {
-      hits.push(sc.kw);
-      if (hits.length >= KW_MAX_SCENARIOS) break;
-    }
+    let score = 0;
+    if (sc.cats.has(cat)) score += 3;
+    score += sc.tagMatches.filter((t) => tags.includes(t)).length * 3;
+    score += sc.primaryKw.filter((k) => text.includes(k)).length * 3;
+    score += sc.secondaryKw.filter((k) => text.includes(k)).length;
+    if (score > 0) scored.push({ kw: sc.kw, score });
   }
-  return hits.join(" ");
+  return scored
+    .sort((a, b) => b.score - a.score)
+    .slice(0, KW_MAX_SCENARIOS)
+    .map((x) => x.kw)
+    .join(" ");
 }
 
 // Same convention as generate-sitemap.mjs: write into dist/ (cwd === frontend/
