@@ -1139,20 +1139,42 @@
     "description": "Find AI image generation tools that create, edit, and manipulate images programmatically.",
     "match": {
       "categories": [],
-      "keywords": [
+      "primary_keywords": [
         "image generation",
-        "image",
-        "dall-e",
+        "text-to-image",
+        "text to image",
+        "generate image",
+        "image generator",
         "stable diffusion",
         "midjourney",
-        "generate image",
-        "vision",
-        "screenshot"
+        "dall-e",
+        "flux",
+        "comfyui",
+        "diffusion model",
+        "ai art",
+        "ai image",
+        "nano banana"
+      ],
+      "secondary_keywords": [
+        "img2img",
+        "inpainting",
+        "image editing",
+        "imagen",
+        "sdxl",
+        "image model"
+      ],
+      "exclude_keywords": [
+        "text generation",
+        "screenshot",
+        "image recognition",
+        "ocr",
+        "image classification"
       ],
       "min_results": 3,
       "max_results": 10,
       "tag_matches": [
-        "image"
+        "image-generation",
+        "text-to-image"
       ]
     },
     "related": [
