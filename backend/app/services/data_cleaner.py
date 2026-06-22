@@ -251,6 +251,19 @@ class DataCleaner:
 
     def _infer_project_type(self, repo: Dict[str, Any]) -> str:
         """Infer project type from category, name, topics, and description."""
+        searchable = " ".join([
+            repo.get("full_name", ""),
+            repo.get("description") or "",
+            " ".join(repo.get("topics") or []),
+        ]).lower()
+        stars = repo.get("stargazers_count", 0)
+
+        # Check for agent frameworks first (large, well-known projects)
+        if stars > 5000 and any(kw in searchable for kw in [
+            "framework", "platform", "workflow", "orchestrat", "automation"
+        ]):
+            return "agent-framework"
+
         category = self._classify(repo)
 
         # Direct category mapping
@@ -265,19 +278,6 @@ class DataCleaner:
         }
         if category in category_map:
             return category_map[category]
-
-        # Check for agent frameworks (large, well-known projects)
-        searchable = " ".join([
-            repo.get("full_name", ""),
-            repo.get("description") or "",
-            " ".join(repo.get("topics") or []),
-        ]).lower()
-        stars = repo.get("stargazers_count", 0)
-
-        if stars > 5000 and any(kw in searchable for kw in [
-            "framework", "platform", "workflow", "orchestrat", "automation"
-        ]):
-            return "agent-framework"
 
         # Check name/topics for skill keyword
         name = repo.get("name", "").lower()
