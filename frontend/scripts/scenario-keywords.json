@@ -104,7 +104,6 @@
       "min_results": 5,
       "max_results": 10,
       "tag_matches": [
-        "mcp",
         "database"
       ]
     },
@@ -154,7 +153,6 @@
       "min_results": 5,
       "max_results": 10,
       "tag_matches": [
-        "mcp",
         "browser"
       ]
     },
@@ -201,9 +199,7 @@
       ],
       "min_results": 5,
       "max_results": 10,
-      "tag_matches": [
-        "mcp"
-      ]
+      "tag_matches": []
     },
     "related": [
       "mcp-database",
@@ -249,9 +245,7 @@
       ],
       "min_results": 5,
       "max_results": 10,
-      "tag_matches": [
-        "mcp"
-      ]
+      "tag_matches": []
     },
     "related": [
       "mcp-database",
@@ -298,7 +292,6 @@
       "min_results": 5,
       "max_results": 10,
       "tag_matches": [
-        "mcp",
         "agent-memory"
       ]
     },
@@ -1312,7 +1305,8 @@
       "mcp-database",
       "mcp-browser",
       "code-completion"
-    ]
+    ],
+    "broad": true
   },
   {
     "slug": "codex-skills",
@@ -1339,7 +1333,8 @@
       "claude-code-skills",
       "code-completion",
       "mcp-api"
-    ]
+    ],
+    "broad": true
   },
   {
     "slug": "ai-agent-framework",
@@ -1379,7 +1374,8 @@
       "multi-agent",
       "prompt-engineering",
       "workflow-automation"
-    ]
+    ],
+    "broad": true
   },
   {
     "slug": "multi-agent",
@@ -1859,7 +1855,8 @@
       "claude-code-skills",
       "cli-tools",
       "workflow-automation"
-    ]
+    ],
+    "broad": true
   },
   {
     "slug": "free-mcp-servers",
@@ -1912,7 +1909,8 @@
       "mcp-database",
       "mcp-browser",
       "mcp-filesystem"
-    ]
+    ],
+    "broad": true
   },
   {
     "slug": "python-mcp-servers",
@@ -1954,7 +1952,8 @@
       "free-mcp-servers",
       "typescript-mcp-servers",
       "mcp-database"
-    ]
+    ],
+    "broad": true
   },
   {
     "slug": "typescript-mcp-servers",
@@ -1997,7 +1996,8 @@
       "free-mcp-servers",
       "python-mcp-servers",
       "mcp-database"
-    ]
+    ],
+    "broad": true
   },
   {
     "slug": "open-webui-integrations",
@@ -2286,7 +2286,6 @@
       "min_results": 5,
       "max_results": 30,
       "tag_matches": [
-        "mcp",
         "saas"
       ]
     },
@@ -2372,9 +2371,7 @@
       ],
       "min_results": 3,
       "max_results": 30,
-      "tag_matches": [
-        "mcp"
-      ]
+      "tag_matches": []
     },
     "related": [
       "data-pipeline",
@@ -2834,7 +2831,8 @@
       "claude-code-skills",
       "codex-skills",
       "agent-governance"
-    ]
+    ],
+    "broad": true
   },
   {
     "slug": "multi-ai-bridge",
