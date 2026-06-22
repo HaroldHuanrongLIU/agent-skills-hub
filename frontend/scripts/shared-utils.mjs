@@ -165,7 +165,7 @@ export async function fetchAllSkills() {
     "stars", "forks", "description", "category", "language", "score", "license",
     "last_commit_at", "created_at", "topics", "tags",
     "quality_score", "platforms", "star_momentum", "estimated_tokens",
-    "open_issues", "total_commits",
+    "open_issues", "total_commits", "security_grade",
   ].join(",");
 
   // Keyset pagination by primary key. Deep OFFSET (offset=77000&order=stars.desc)

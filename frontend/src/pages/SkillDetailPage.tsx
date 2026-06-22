@@ -10,6 +10,7 @@ import { PlatformBadges } from "../components/PlatformBadges";
 import { SecurityBadge } from "../components/SecurityBadge";
 import { SizeBadge } from "../components/SizeBadge";
 import { InstallCommand } from "../components/InstallCommand";
+import { BadgeEmbed } from "../components/BadgeEmbed";
 import { FavoriteButton } from "../components/FavoriteButton";
 import { ShareButtons } from "../components/ShareButtons";
 import { SiteHeader } from "../components/SiteHeader";
@@ -265,6 +266,7 @@ export function SkillDetailPage() {
               {t("detail.viewOnGitHub")}
             </a>
             <InstallCommand skill={detail} />
+            <BadgeEmbed skill={detail} />
             <button
               onClick={() => setContactOpen(true)}
               className="inline-flex items-center gap-2 px-5 py-2.5 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors font-medium text-sm cursor-pointer"
