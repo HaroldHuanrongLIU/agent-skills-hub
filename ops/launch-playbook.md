@@ -209,3 +209,42 @@ PR title: `Add Agent Skills Hub to <section>` · PR body (1 line): "Adds a direc
 4. Following days: Reddit, one sub/day, in the order above.
 5. After badges redeploy: badge outreach (B) + SlowMist PR (D).
 6. PH: decide A (launch the CLI) or skip — not before HN/Reddit have run.
+
+---
+
+## Today — ready-to-execute (no HN timing needed)
+
+Done already: ✅ main-repo topics · ✅ badge upgrade live (SAFE) · ✅ CLI README links the report.
+
+### Entry card (portable across all awesome-lists)
+```
+Name:        Agent Skills Hub
+URL:         https://agentskillshub.top
+One-liner:   Directory + CLI that indexes and security-grades 117K+ Claude Code
+             skills & MCP servers — vet any one before you install.
+Tags:        directory · discovery · security · CLI
+Repo:        github.com/zhuyansen/agent-skills-hub
+```
+Markdown line (for plain-list sections):
+```md
+- [Agent Skills Hub](https://agentskillshub.top) - Directory + CLI that security-grades 117K+ Claude Code skills & MCP servers; vet any skill before install with `npx @agentskillshub/cli`.
+```
+Submission method per list (verified): `hesreallyhim/awesome-claude-code` = generated README, use its add-a-resource issue/form (don't hand-edit). `e2b-dev/awesome-ai-agents` + `Shubhamsaboo/awesome-llm-apps` = standard markdown, PR into Resources/Tools (open an issue first if unsure). Do e2b or llm-apps first.
+
+### Badge outreach message (SAFE / high-quality authors only — GitHub issue/Discussion, personalized, never bulk)
+> **Title:** Your skill is graded 🟢 SAFE on Agent Skills Hub
+>
+> Hi! I run [Agent Skills Hub](https://agentskillshub.top), an open directory that security-grades and quality-scores agent skills & MCP servers. **{owner}/{repo}** came through 🟢 SAFE — nice work.
+> If it's useful, you can show the grade in your README with one line:
+> ```md
+> [![Security-graded by Agent Skills Hub](https://agentskillshub.top/badge/{owner}/{repo}.svg)](https://agentskillshub.top/skill/{owner}/{repo}/)
+> ```
+> It links to your skill's page (grade + quality breakdown). No strings — just a trust signal for your users.
+
+Etiquette: SAFE/high-quality only · personalize each · GitHub issue or Discussion (not email) · ≤5–10/day · never identical bulk.
+
+### Today checklist 🔴 (you, under your GitHub identity)
+- [ ] Open 1 awesome-list PR (e2b or llm-apps) using the entry card
+- [ ] Badge outreach to 5–10 SAFE authors (target list below / in chat)
+- [ ] Pin `agent-skills-hub` + `agentskillshub-cli` on your GitHub profile
+- [ ] (optional) Reddit r/ClaudeAI post (copy in §4)
