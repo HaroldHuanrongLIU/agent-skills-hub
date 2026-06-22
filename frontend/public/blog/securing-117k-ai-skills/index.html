@@ -154,6 +154,17 @@
 
       <p>This is deliberately a <em>first</em> layer: it catches patterns, not intent. A clean-looking skill can still do something semantically nasty; that's what an on-demand deep scan is for. But at 117K scale, the pattern layer is what makes the catalog auditable at all.</p>
 
+      <h2>Why this report uses only the rule layer</h2>
+
+      <p>Security grading here is layered, and this report deliberately uses just the first one:</p>
+
+      <ul>
+        <li><strong>Layer 1 — rule-based (this report).</strong> Pattern matching, ~10ms per repo, free across the entire catalog. It's the only layer cheap enough to grade all 117K, so every number here comes from it. It also reads patterns, not intent — which is exactly why 3% is a floor.</li>
+        <li><strong>Deeper, per-skill, on demand.</strong> Judging intent (is this <code>curl | sh</code> installing Homebrew, or exfiltrating a key?) and AST/taint-level analysis belong at the single-skill level, run on request — not swept across the whole catalog, where they'd be too expensive and too noisy. That's the on-demand / enterprise layer, and it's where the stricter checking lives.</li>
+      </ul>
+
+      <p>So this isn't the deepest look we can take at one skill — it's the broadest honest look we can take at all of them. If you need a deep audit on a specific skill, that's <a href="https://agentskillshub.top/enterprise/">agentskillshub.top/enterprise</a>.</p>
+
       <h2>Finding 1 — 82% of the catalog has never been graded</h2>
 
       <p>Of <strong>117,854</strong> indexed skills, only <strong>20,853 (17.7%)</strong> clear 5 stars — the threshold where a skill is popular enough to be worth grading. The other <strong>~97,000 are effectively unaudited.</strong></p>
