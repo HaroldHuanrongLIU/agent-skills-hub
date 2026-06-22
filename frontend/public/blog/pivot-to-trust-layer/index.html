@@ -163,15 +163,15 @@
 
       <p>The pattern is impossible to miss. <strong>People pay to remove risk, not to discover skills.</strong> Discovery is table stakes — the price of entry, not the value. Every dollar of willingness-to-pay in those interviews sat behind security, rollback, and audit. My directory was solving the one link in the chain nobody would pay for.</p>
 
-      <h2>The 43% Problem</h2>
+      <h2>The Vulnerability Problem</h2>
 
       <p>Then I turned Hub's own scanners loose on the ecosystem it had been politely cataloguing. The result was uncomfortable.</p>
 
-      <p><strong>43% of the open-source MCP servers we scanned carry critical security vulnerabilities</strong> — prompt injection, credential leakage, or sandbox-escape risk. Not edge cases. Nearly half.</p>
+      <p><strong>Independent analysis puts the agent-skill vulnerability rate at 26.1%</strong> (Liu et al. 2026, <a href="https://arxiv.org/abs/2601.10338">arXiv:2601.10338</a>) — prompt injection, credential leakage, sandbox-escape risk. Our own <a href="/blog/securing-117k-ai-skills/">rule-based scan of the full catalog</a> is deliberately more conservative, yet still flags 1 in 32 graded skills as outright unsafe. Either way, this is not an edge case.</p>
 
       <p>It gets worse the closer you look. Connecting five MCP servers, each exposing ~30 tools, can burn 100K+ tokens of context before the agent does anything useful. And the <code>stdio</code> transport layer has a habit of returning <code>200 OK</code> on actual errors — which means the model happily hallucinates on top of a failure it was never told about.</p>
 
-      <p>This is the part that reframed everything for me. "Hub has 86,000 skills" is not a value proposition. <strong>"Here are the skills in those 86,000 that are actually safe to put in production" — that is.</strong> The 43% vulnerability rate isn't bad news for Hub. It's the moat. A skill that passes a real audit carries a scarce, provable trust premium. That premium is something enterprises will pay for, and creators will pay to earn.</p>
+      <p>This is the part that reframed everything for me. "Hub has 86,000 skills" is not a value proposition. <strong>"Here are the skills in those 86,000 that are actually safe to put in production" — that is.</strong> That vulnerability rate isn't bad news for Hub. It's the moat. A skill that passes a real audit carries a scarce, provable trust premium. That premium is something enterprises will pay for, and creators will pay to earn.</p>
 
       <h2>The New Positioning</h2>
 
