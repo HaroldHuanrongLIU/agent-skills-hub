@@ -270,6 +270,38 @@ async function main() {
     console.log(`sitemap-book.xml: skipped (${e.message})`);
   }
 
+  // 6c. sitemap-blog.xml — blog index + posts (EN + zh). Blog was previously
+  // absent from the sitemap entirely, so Google had no pointer to /blog/ posts.
+  let blogCount = 0;
+  try {
+    const { readdirSync: rdb, existsSync: exb } = await import("fs");
+    if (exb("dist/blog")) {
+      const blogEntries = [];
+      const add = (path, priority) =>
+        blogEntries.push(`  <url>
+    <loc>${SITE}${path}</loc>
+    <changefreq>monthly</changefreq>
+    <priority>${priority}</priority>
+    <lastmod>${today}</lastmod>
+  </url>`);
+      add("/blog/", "0.8");
+      const slugs = rdb("dist/blog").filter((s) => !s.startsWith(".") && s !== "index.html");
+      for (const slug of slugs) {
+        if (slug === "zh") {
+          add("/blog/zh/", "0.6");
+          continue;
+        }
+        add(`/blog/${slug}/`, "0.8");
+        if (exb(`dist/blog/${slug}/zh/index.html`)) add(`/blog/${slug}/zh/`, "0.6");
+      }
+      writeFileSync("dist/sitemap-blog.xml", wrapUrlset(blogEntries));
+      blogCount = blogEntries.length;
+      console.log(`sitemap-blog.xml: ${blogCount} URLs`);
+    }
+  } catch (e) {
+    console.log(`sitemap-blog.xml: skipped (${e.message})`);
+  }
+
   // 6a. sitemap-authors.xml — top-N author aggregation pages (/author/{username}/)
   // 2026-04-29 update: tightened from 500 → only authors with total_stars >= 1000
   // OR ≥ 5 skills (combined the stars + prolific signal). Goal: redirect Google's
@@ -344,6 +376,9 @@ async function main() {
   }
   if (bookCount > 0) {
     sitemapFiles.push("sitemap-book.xml");
+  }
+  if (blogCount > 0) {
+    sitemapFiles.push("sitemap-blog.xml");
   }
 
   writeFileSync("dist/sitemap.xml", buildSitemapIndex(sitemapFiles));
