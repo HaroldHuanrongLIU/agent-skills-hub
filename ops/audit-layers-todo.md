@@ -60,3 +60,26 @@ Effort: MVP ~3–5 days (runner + mapping + CI + traps); Steps 2–3 after MVP h
 3. Then Item 2 Step 2 (LLM re-check on deep layer), then Step 3 (paywall) once there's data and traffic.
 
 When both land: drop "Coming soon / 待上线" in the report, rewrite the two bullets in present tense, and consider a follow-up post ("we went from rule-based floor to deep audit — here's what changed").
+
+---
+
+## Future enhancement — skill spec-compliance signal (from iflytek/skillhub recon)
+
+iflytek/skillhub (enterprise self-hosted skill registry, 3.6k★) has NO quality
+scoring or security grading — confirms that's our differentiator. But it formalizes
+a skill manifest/schema (capability declarations, I/O contracts, versioning) we
+could borrow.
+
+- [ ] Add a **spec-compliance signal**: check Claude SKILL.md frontmatter (name +
+      description), MCP tool schema / declared I/O. `_agent_readiness` already
+      detects frontmatter presence — extend to compliance (well-formed vs just
+      present), feed into the (now recalibrated) quality score.
+- [ ] In SkillSpector deep audit (Item 2): verify **declared capabilities vs actual
+      code behavior** — e.g. a skill that declares read-only but writes files = flag.
+      Higher-order trust signal than pure pattern matching.
+- [ ] Surface a "✓ Spec-compliant" mark on skill pages — another Trust Layer differentiator.
+
+Competitor note: position as "iflytek SkillHub = where enterprises HOST skills;
+AgentSkillsHub = where you VET any open-source skill before you host it." Their
+namespace/RBAC/review/audit/self-host features validate our /enterprise/ on-prem +
+audit direction (real demand) — use in enterprise sales / competitive battlecard.
