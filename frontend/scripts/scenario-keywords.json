@@ -90,7 +90,13 @@
         "screenshot",
         "playwright",
         "filesystem",
-        "file manager"
+        "file manager",
+        "memories",
+        "agent memory",
+        "ai memory",
+        "memory system",
+        "agent-memory",
+        "mem0"
       ],
       "topic_matches": [
         "database",
@@ -780,7 +786,17 @@
       "max_results": 10,
       "tag_matches": [
         "data-pipeline"
-      ]
+      ],
+      "primary_keywords": [
+        "etl",
+        "data pipeline",
+        "airflow",
+        "dagster",
+        "prefect",
+        "data ingestion",
+        "data orchestration"
+      ],
+      "secondary_keywords": []
     },
     "related": [
       "web-scraping",
@@ -854,7 +870,31 @@
         "accuracy"
       ],
       "min_results": 3,
-      "max_results": 10
+      "max_results": 10,
+      "tag_matches": [
+        "evaluation",
+        "benchmark"
+      ],
+      "primary_keywords": [
+        "model evaluation",
+        "llm eval",
+        "eval harness",
+        "evaluation framework",
+        "promptfoo",
+        "ragas",
+        "lm-eval",
+        "deepeval"
+      ],
+      "secondary_keywords": [
+        "leaderboard",
+        "evals"
+      ],
+      "exclude_keywords": [
+        "agent memory",
+        "ai memory",
+        "memory system",
+        "memories"
+      ]
     },
     "related": [
       "prompt-engineering",
@@ -2211,10 +2251,6 @@
         "probity"
       ],
       "secondary_keywords": [
-        "governance",
-        "audit",
-        "deterministic",
-        "compact",
         "context budget",
         "tool gating",
         "usage tracking",
@@ -2745,8 +2781,7 @@
         "guizang",
         "mckinsey-pptx",
         "ppt-image-first",
-        "magazine slides",
-        "deck"
+        "magazine slides"
       ],
       "secondary_keywords": [
         "slides",
@@ -2759,8 +2794,7 @@
         "ppt",
         "pptx",
         "presentation",
-        "slides",
-        "deck"
+        "slides"
       ],
       "min_results": 5,
       "max_results": 25,

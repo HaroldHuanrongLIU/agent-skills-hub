@@ -96,7 +96,7 @@ const SCENARIO_MATCHERS = SCENARIOS.map((s) => {
  *  strongest (not the first-in-file-order) stops high-star generalist repos —
  *  a "Claude Code guide" that mentions scraping once — from getting tagged with
  *  loosely-matched scenarios that then pollute specific queries. */
-function scenarioKw(r) {
+function topScenarios(r) {
   const cat = r.category || "";
   const tags = (Array.isArray(r.tags) ? r.tags : parseJsonArray(r.tags)).map(
     (t) => String(t).toLowerCase(),
@@ -117,13 +117,29 @@ function scenarioKw(r) {
     if (tagHits + primHits + secHits === 0) continue;
     const score =
       (sc.cats.has(cat) ? 3 : 0) + tagHits * 3 + primHits * 3 + secHits;
-    scored.push({ kw: sc.kw, score });
+    scored.push({ sc, score });
   }
   return scored
     .sort((a, b) => b.score - a.score)
     .slice(0, KW_MAX_SCENARIOS)
-    .map((x) => x.kw)
+    .map((x) => x.sc);
+}
+
+// Legacy space-joined blob (`w`). Kept one cycle so pre-0.3.0 CLIs still match;
+// drop once the structured `wk` array (below) is the only consumer.
+function scenarioKw(r) {
+  return topScenarios(r)
+    .map((sc) => sc.kw)
     .join(" ");
+}
+
+/** Structured scenario keywords (`wk`) — the SAME tokens as the blob, but split
+ *  into a deduped ARRAY of discrete units. Lets the CLI compare whole keywords
+ *  instead of substring-scanning one blob, killing cross-word bleed (a query
+ *  "网页数据爬取" no longer matches the generic keyword "数据库" via "数据"). */
+function scenarioKwArr(r) {
+  const units = topScenarios(r).flatMap((sc) => sc.kw.split(/\s+/));
+  return [...new Set(units.filter(Boolean))];
 }
 
 // Same convention as generate-sitemap.mjs: write into dist/ (cwd === frontend/
@@ -205,7 +221,8 @@ function toRow(r) {
     g: r.security_grade || "unknown",
     k: r.estimated_tokens ?? 0,
     o: r.is_official ? 1 : 0,
-    w: scenarioKw(r), // bilingual scenario keywords (Chinese search + scenario boost)
+    w: scenarioKw(r), // legacy blob — pre-0.3.0 CLIs; drop after `wk` adoption
+    wk: scenarioKwArr(r), // structured scenario keywords (word-aware CLI matching)
   };
 }
 
